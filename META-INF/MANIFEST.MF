@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Codevo
+Bundle-SymbolicName: codevo;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: codevo.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.8.101",
+ org.eclipse.jdt.core;bundle-version="3.9.2",
+ org.junit,
+ org.eclipse.jdt.launching;bundle-version="3.7.1"
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: lib/hamcrest-library-1.3.jar,
+ .,
+ lib/commons-io-2.4.jar
