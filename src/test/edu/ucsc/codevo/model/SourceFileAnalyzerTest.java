@@ -36,61 +36,65 @@ public class SourceFileAnalyzerTest {
 	@Test
 	public void shouldGetClassName() {
 		String[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray("edu.ucsc.codevo.fixtures.App"));
-	}
-/*	
- * 
- * http://rcpquickstart.wordpress.com/2007/06/20/unit-testing-plug-ins-with-fragments/
- * http://www.informit.com/articles/article.aspx?p=1315271&seqNum=8
-	@Test
-	public void shouldGetMethodName() throws IOException {
-		CodeEntity[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray(new HasName<>("edu.ucsc.cs.netEvo.App.main")));
+		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;"));
 	}
 	
 	@Test
-	public void shouldGetFieldName() throws IOException {
-		CodeEntity[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray(new HasName<>("edu.ucsc.cs.netEvo.App.mode")));
+	public void shouldGetMethodName() {
+		String[] vertices = getVertices();
+		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.main([Ljava/lang/String;)V"));
 	}
 	
 	@Test
-	public void shouldGetConstructor() throws IOException {
-		CodeEntity[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray(new HasName<>("edu.ucsc.cs.netEvo.App.App")));
+	public void shouldGetFieldName() {
+		assertThat(getVertices(), hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.mode)I"));
 	}
 	
 	@Test
-	public void shouldGetInnerClassName() throws IOException {
-		CodeEntity[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray(new HasName<>("edu.ucsc.cs.netEvo.App.Component")));		
+	public void shouldGetConstructor() {
+		String[] vertices = getVertices();
+		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.()V"));
+		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V"));
+	}
+	
+	@Test
+	public void shouldGetInnerClassName() {
+		assertThat(getVertices(), hasItemInArray("Ledu/ucsc/codevo/fixtures/App$Component;"));		
 	}
 
 	@Test
-	public void shouldGetInnerClassMethodName() throws IOException {
-		CodeEntity[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray(new HasName<>("edu.ucsc.cs.netEvo.App.Component.process")));		
+	public void shouldGetInnerClassMethodName() {
+		assertThat(getVertices(), hasItemInArray("Ledu/ucsc/codevo/fixtures/App$Component;.process()V"));		
 	}
 	
 	@Test
-	public void shouldGetSingleTypeReference() throws IOException {
+	public void shouldGetSimpleTypeReference() {
 		Dependency[] edges = getEdges();
-		assertThat(edges,hasItemInArray(new HasTarget<>("SourceFileAnalyzer")));
+		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/String;")));
+		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/File;")));
 	}
 
 	@Test
-	public void shouldGetQualifiedTypeReference() throws IOException {
-		Dependency[] edges = getEdges();
-		assertThat(edges,hasItemInArray(new HasTarget<>("com.google.common.base.Joiner")));
+	public void shouldGetQualifiedTypeReference() {
 	}
 
 	@Test
-	public void shouldGetQualifiedNameReference() throws IOException {
+	public void shouldGetMethodInvocation() {
 		Dependency[] edges = getEdges();
-		assertThat(edges,hasItemInArray(new HasTarget<>("com.google.common.collect.Lists")));
-		assertThat(edges,hasItemInArray(new HasTarget<>("System.out")));
+		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/PrintStream;.println(Ljava/lang/String;)V")));
 	}
 
+	@Test
+	public void shouldGetFieldAccessInMethodInvocationReceiver() {
+		Dependency[] edges = getEdges();
+		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/System;.out)Ljava/io/PrintStream;")));		
+	}
+	
+	@Test
+	public void shouldGetFieldAccessInFieldAccessReceiver() {
+		
+	}
+	/*	
 	@Test
 	public void shouldGetArrayQualifiedTypeReference() throws IOException {
 		Dependency[] edges = getEdges();
@@ -121,8 +125,10 @@ public class SourceFileAnalyzerTest {
 		try {
 			IWorkspaceRoot root = workspace.getRoot();
 			IProject project = root.getProject("fixtureProject");
-			project.create(null);
-			project.open(null);
+			if (!project.exists()) {
+				project.create(null);				
+				project.open(null);
+			}
 			
 			IProjectDescription description = project.getDescription();
 			description.setNatureIds(new String[] { JavaCore.NATURE_ID });
