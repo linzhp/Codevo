@@ -109,13 +109,19 @@ public class SourceFileAnalyzerTest {
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/IOException;")));
 	}
 
-	/*	
 	@Test
-	public void shouldGetArrayTypeReference() throws IOException {
+	public void shouldGetArrayTypeReference() {
 		Dependency[] edges = getEdges();
-		assertThat(edges,hasItemInArray(new HasTarget<>("String")));
+		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/util/EventListener;")));
 	}
-*/
+	
+	@Test
+	public void shouldGetConstructorInvocation() {
+		Dependency[] edges = getEdges();
+		assertThat(edges, hasItemInArray(new HasTarget<>(
+				"Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V")));
+	}
+
 	private String[] getVertices() {
 		SourceFileAnalyzer analyzer = parseProject();
 		String[] vertices = analyzer.vertices.toArray(new String[analyzer.vertices.size()]);

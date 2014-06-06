@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IMethodBinding;
@@ -95,55 +96,15 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		recordDependency(node, b);
 		return true;
 	}
-
-	/*
+	
+	/**
+	 * Can only handle the invocations between constructors,
+	 * not class instance creation
+	 */
 	@Override
-	public boolean visit(
-			ArrayQualifiedTypeReference arrayQualifiedTypeReference,
-			BlockScope scope) {
-		edges.add(new Dependency(getQualifiedName(scope), Joiner.on('.').join(
-				Utils.toStringArray(arrayQualifiedTypeReference.tokens))));
+	public boolean visit(ConstructorInvocation node) {
+		IBinding b = node.resolveConstructorBinding();
+		recordDependency(node, b);
 		return true;
 	}
-
-	@Override
-	public boolean visit(
-			ArrayQualifiedTypeReference arrayQualifiedTypeReference,
-			ClassScope scope) {
-		edges.add(new Dependency(getQualifiedName(scope), Joiner.on('.').join(
-				Utils.toStringArray(arrayQualifiedTypeReference.tokens))));
-		return true;
-	}
-
-	@Override
-	public boolean visit(ArrayTypeReference arrayTypeReference, BlockScope scope) {
-		edges.add(new Dependency(getQualifiedName(scope), new String(
-				arrayTypeReference.token)));
-		return true;
-	}
-
-	@Override
-	public boolean visit(ArrayTypeReference arrayTypeReference, ClassScope scope) {
-		edges.add(new Dependency(getQualifiedName(scope), new String(
-				arrayTypeReference.token)));
-		return true;
-	}
-
-	@Override
-	public boolean visit(ExplicitConstructorCall explicitConstructor,
-			BlockScope scope) {
-		// not process for now, postpone until method overloading is considered
-		return true;
-	}
-
-	@Override
-	public boolean visit(FieldReference fieldReference, BlockScope scope) {
-		return true; // do nothing by default, keep traversing
-	}
-
-	@Override
-	public boolean visit(FieldReference fieldReference, ClassScope scope) {
-		return true; // do nothing by default, keep traversing
-	}
-*/
 }

@@ -2,6 +2,7 @@ package edu.ucsc.codevo.fixtures;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.EventListener;
 
 import edu.ucsc.cs.netEvo.CodeEntity;
 import edu.ucsc.cs.netEvo.SourceFileAnalyzer;
@@ -30,6 +31,7 @@ public class App
     	SourceFileAnalyzer s;
     	java.io.File file;
     	java.io.IOException[] exceptions;
+    	EventListener[] listeners;
     	s = new SourceFileAnalyzer(100);
     	List<CodeEntity> v = s.vertices;
     	Component c = new Component();
