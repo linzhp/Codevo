@@ -92,15 +92,24 @@ public class SourceFileAnalyzerTest {
 	
 	@Test
 	public void shouldGetFieldAccessInFieldAccessReceiver() {
-		
-	}
-	/*	
-	@Test
-	public void shouldGetArrayQualifiedTypeReference() throws IOException {
 		Dependency[] edges = getEdges();
-		assertThat(edges,hasItemInArray(new HasTarget<>("edu.ucsc.cs.netEvo.CodeEntity")));
+		assertThat(edges,hasItemInArray(new HasTarget<>(
+				"Ledu/ucsc/codevo/fixtures/App$Component;.module)Ledu/ucsc/codevo/fixtures/App$Module;")));		
+	}
+	
+	@Test
+	public void shouldGetFieldAccess() {
+		assertThat(getEdges(),hasItemInArray(new HasTarget<>(
+				"Ledu/ucsc/codevo/fixtures/App$Module;.state)I")));
+	}
+	
+	@Test
+	public void shouldGetArrayQualifiedTypeReference() {
+		Dependency[] edges = getEdges();
+		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/IOException;")));
 	}
 
+	/*	
 	@Test
 	public void shouldGetArrayTypeReference() throws IOException {
 		Dependency[] edges = getEdges();

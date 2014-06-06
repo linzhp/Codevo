@@ -29,15 +29,22 @@ public class App
     {
     	SourceFileAnalyzer s;
     	java.io.File file;
-    	edu.ucsc.cs.netEvo.CodeEntity[] nodes;
+    	java.io.IOException[] exceptions;
     	s = new SourceFileAnalyzer(100);
     	List<CodeEntity> v = s.vertices;
+    	Component c = new Component();
+    	int state = c.module.state;
         System.out.println( "Hello World!" );
     }
     
     class Component {
+    	Module module;
     	void process() {
     		
     	}
+    }
+    
+    class Module {
+    	int state
     }
 }
