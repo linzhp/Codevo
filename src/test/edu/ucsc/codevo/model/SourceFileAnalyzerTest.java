@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -29,14 +30,71 @@ import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.LibraryLocation;
 import org.hamcrest.CustomMatcher;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SourceFileAnalyzerTest {
+
+	private static SourceFileAnalyzer analyzer;
+
+	@BeforeClass
+	public static void parseProject() {
+		analyzer = new SourceFileAnalyzer();
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		try {
+			IWorkspaceRoot root = workspace.getRoot();
+			IProject project = root.getProject("fixtureProject");
+			if (!project.exists()) {
+				project.create(null);	
+			}
+			project.open(null);
+			
+			IProjectDescription description = project.getDescription();
+			description.setNatureIds(new String[] { JavaCore.NATURE_ID });
+			project.setDescription(description, null);
+			
+			IJavaProject javaProject = JavaCore.create(project);
+			
+			List<IClasspathEntry> entries = new ArrayList<IClasspathEntry>();
+			IVMInstall vmInstall = JavaRuntime.getDefaultVMInstall();
+			LibraryLocation[] locations = JavaRuntime.getLibraryLocations(vmInstall);
+			for (LibraryLocation element : locations) {
+			 entries.add(JavaCore.newLibraryEntry(element.getSystemLibraryPath(), null, null));
+			}
+			FileUtils.copyDirectoryToDirectory(new File("fixtures/src"), project.getLocation().toFile());
+			project.refreshLocal(IProject.DEPTH_INFINITE, null);
+			entries.add(JavaCore.newSourceEntry(project.getFullPath().append("src")));
+			
+			javaProject.setRawClasspath(entries.toArray(new IClasspathEntry[entries.size()]), null);
+			
+			IPackageFragment[] packages = javaProject.getPackageFragments();
+			for (IPackageFragment p : packages) {
+				if (p.getKind() == IPackageFragmentRoot.K_SOURCE) {
+					for (ICompilationUnit unit : p.getCompilationUnits()) {
+						ASTParser parser = ASTParser.newParser(AST.JLS4);
+						parser.setSource(unit);
+						parser.setResolveBindings(true);
+						@SuppressWarnings("rawtypes")
+						Hashtable options = JavaCore.getOptions();
+						JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+						parser.setCompilerOptions(options);
+						ASTNode ast = parser.createAST(null);
+						ast.accept(analyzer);
+					}
+				}
+			}
+		} catch (IOException | CoreException e1) {
+			e1.printStackTrace();
+			System.exit(1);
+		}
+	}
 
 	@Test
 	public void shouldGetClassName() {
 		String[] vertices = getVertices();
 		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;"));
+		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/Dependency;"));
+		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/BigCat;"));
 	}
 	
 	@Test
@@ -123,64 +181,12 @@ public class SourceFileAnalyzerTest {
 	}
 
 	private String[] getVertices() {
-		SourceFileAnalyzer analyzer = parseProject();
 		String[] vertices = analyzer.vertices.toArray(new String[analyzer.vertices.size()]);
 		return vertices;
 	}
 	
 	private Dependency[] getEdges() {
-		SourceFileAnalyzer analyzer = parseProject();
 		return analyzer.edges.toArray(new Dependency[analyzer.edges.size()]);
-	}
-
-
-	private SourceFileAnalyzer parseProject() {
-		SourceFileAnalyzer analyzer = new SourceFileAnalyzer();
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		try {
-			IWorkspaceRoot root = workspace.getRoot();
-			IProject project = root.getProject("fixtureProject");
-			if (!project.exists()) {
-				project.create(null);				
-				project.open(null);
-			}
-			
-			IProjectDescription description = project.getDescription();
-			description.setNatureIds(new String[] { JavaCore.NATURE_ID });
-			project.setDescription(description, null);
-			
-			IJavaProject javaProject = JavaCore.create(project);
-			
-			List<IClasspathEntry> entries = new ArrayList<IClasspathEntry>();
-			IVMInstall vmInstall = JavaRuntime.getDefaultVMInstall();
-			LibraryLocation[] locations = JavaRuntime.getLibraryLocations(vmInstall);
-			for (LibraryLocation element : locations) {
-			 entries.add(JavaCore.newLibraryEntry(element.getSystemLibraryPath(), null, null));
-			}
-			FileUtils.copyDirectoryToDirectory(new File("fixtures/src"), project.getLocation().toFile());
-			project.refreshLocal(IProject.DEPTH_INFINITE, null);
-			entries.add(JavaCore.newSourceEntry(project.getFullPath().append("src")));
-			
-			javaProject.setRawClasspath(entries.toArray(new IClasspathEntry[entries.size()]), null);
-			
-			IPackageFragment[] packages = javaProject.getPackageFragments();
-			for (IPackageFragment p : packages) {
-				if (p.getKind() == IPackageFragmentRoot.K_SOURCE) {
-					for (ICompilationUnit unit : p.getCompilationUnits()) {
-						ASTParser parser = ASTParser.newParser(AST.JLS4);
-						parser.setKind(ASTParser.K_COMPILATION_UNIT);
-						parser.setSource(unit);
-						parser.setResolveBindings(true);
-						ASTNode ast = parser.createAST(null);
-						ast.accept(analyzer);
-					}
-				}
-			}
-		} catch (IOException | CoreException e1) {
-			e1.printStackTrace();
-			System.exit(1);
-		}
-		return analyzer;
 	}
 }
 

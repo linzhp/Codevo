@@ -32,6 +32,7 @@ public class App
     	java.io.File file;
     	java.io.IOException[] exceptions;
     	EventListener[] listeners;
+    	BigCat cat = BigCat.TIGER;
     	s = new SourceFileAnalyzer(100);
     	List<CodeEntity> v = s.vertices;
     	Component c = new Component();

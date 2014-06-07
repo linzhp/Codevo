@@ -5,7 +5,11 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IMethodBinding;
@@ -105,6 +109,30 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(ConstructorInvocation node) {
 		IBinding b = node.resolveConstructorBinding();
 		recordDependency(node, b);
+		return true;
+	}
+
+	@Override
+	public boolean visit(AnnotationTypeDeclaration node) {
+		vertices.add(node.resolveBinding().getKey());
+		return true;
+	}
+
+	@Override
+	public boolean visit(AnnotationTypeMemberDeclaration node) {
+		vertices.add(node.resolveBinding().getKey());
+		return true;
+	}
+
+	@Override
+	public boolean visit(EnumConstantDeclaration node) {
+		vertices.add(node.resolveVariable().getKey());
+		return true;
+	}
+
+	@Override
+	public boolean visit(EnumDeclaration node) {
+		vertices.add(node.resolveBinding().getKey());
 		return true;
 	}
 }
