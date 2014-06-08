@@ -170,7 +170,10 @@ public class SourceFileAnalyzerTest {
 	@Test
 	public void shouldGetArrayTypeReference() {
 		Dependency[] edges = getEdges();
-		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/util/EventListener;")));
+		assertThat(edges,hasItemInArray(new HasDependency<>(
+				"Ledu/ucsc/codevo/fixtures/App;.main([Ljava/lang/String;)V",
+				"Ledu/ucsc/codevo/fixtures/Dependency;")
+				));
 	}
 	
 	@Test
@@ -180,8 +183,20 @@ public class SourceFileAnalyzerTest {
 				"Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V")));
 	}
 
+	@Test
+	public void shouldGetParameterizedType() {
+		assertThat(
+				getEdges(), 
+				hasItemInArray(new HasDependency<>(
+						"Ledu/ucsc/codevo/fixtures/Dependency;.toString()Ljava/lang/String;",
+						"Ledu/ucsc/codevo/fixtures/App$Component;")
+				)
+		);
+	}
+	
 	private String[] getVertices() {
-		String[] vertices = analyzer.vertices.toArray(new String[analyzer.vertices.size()]);
+		String[] vertices = analyzer.vertices.toArray(
+				new String[analyzer.vertices.size()]);
 		return vertices;
 	}
 	
@@ -202,5 +217,21 @@ class HasTarget<T> extends CustomMatcher<T> {
 	public boolean matches(Object item) {
 		return ((Dependency)item).target.equals(target);
 	}
+}
 
+class HasDependency<T> extends CustomMatcher<T> {
+	private String source, target;
+
+	public HasDependency(String source, String target) {
+		super("a dependency from " + source + " to " + target);
+		this.source = source;
+		this.target = target;
+	}
+
+	@Override
+	public boolean matches(Object item) {
+		Dependency d = (Dependency)item;
+		return d.source.equals(source) && d.target.equals(target);
+	}
+	
 }

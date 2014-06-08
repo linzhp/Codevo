@@ -11,6 +11,7 @@ public class Dependency {
 	
 	@Override
 	public String toString() {
+		App.Component c;
 		return source + "->" + target;
 	}
 }

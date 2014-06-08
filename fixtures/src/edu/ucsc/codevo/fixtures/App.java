@@ -31,7 +31,7 @@ public class App
     	SourceFileAnalyzer s;
     	java.io.File file;
     	java.io.IOException[] exceptions;
-    	EventListener[] listeners;
+    	Dependency[] dependencies;
     	BigCat cat = BigCat.TIGER;
     	s = new SourceFileAnalyzer(100);
     	List<CodeEntity> v = s.vertices;
@@ -49,5 +49,11 @@ public class App
     
     class Module {
     	int state
+    }
+    
+    class SubModule extends Module {
+    	SubModule() {
+    		super.state = 3;
+    	}
     }
 }
