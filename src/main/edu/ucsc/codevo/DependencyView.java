@@ -1,4 +1,4 @@
-package codevo;
+package edu.ucsc.codevo;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;

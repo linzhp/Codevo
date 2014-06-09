@@ -1,4 +1,4 @@
-package codevo;
+package edu.ucsc.codevo;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

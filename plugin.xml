@@ -22,7 +22,7 @@
       </category>
       <view
             category="Codevo.defaultCategory"
-            class="codevo.DependencyView"
+            class="edu.ucsc.codevo.DependencyView"
             id="Codevo.dependencyView"
             name="Dependency View"
             restorable="true">
