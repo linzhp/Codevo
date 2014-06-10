@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
@@ -61,8 +62,15 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		case ASTNode.METHOD_DECLARATION:
 			sourceBinding = ((MethodDeclaration)sourceNode).resolveBinding();
 			break;
+		case ASTNode.FIELD_DECLARATION:
+		case ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION:
+		case ASTNode.ENUM_CONSTANT_DECLARATION:
+			sourceBinding = ((AbstractTypeDeclaration)sourceNode.getParent()).resolveBinding();
+			break;
 		case ASTNode.TYPE_DECLARATION:
-			sourceBinding = ((TypeDeclaration)sourceNode).resolveBinding();
+		case ASTNode.ENUM_DECLARATION:
+		case ASTNode.ANNOTATION_TYPE_DECLARATION:
+			sourceBinding = ((AbstractTypeDeclaration)sourceNode).resolveBinding();
 			break;
 		default:
 			sourceBinding = null; // should not reach here
@@ -71,11 +79,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	}
 	
 	private ASTNode getSourceNode(ASTNode node) {
-		while (!(node instanceof TypeDeclaration && 
-				!((TypeDeclaration)node).isLocalTypeDeclaration() ||
-				node instanceof MethodDeclaration && 
-				node.getParent() instanceof TypeDeclaration &&
-				!((TypeDeclaration)node.getParent()).isLocalTypeDeclaration())) {
+		while (!isGlobal(node)) {
 			node = node.getParent();
 			if (node == null) {
 				return null;
@@ -83,27 +87,46 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		}
 		return node;
 	}
+
+	private boolean isGlobal(ASTNode node) {
+		return node instanceof AbstractTypeDeclaration && 
+				!((AbstractTypeDeclaration)node).isLocalTypeDeclaration() ||
+				// excluding super type, type parameters, whose parents are also AbstractTypeDeclaration
+				// TODO consider inheritance later
+				(node instanceof FieldDeclaration || 
+						node instanceof MethodDeclaration ||
+						node instanceof AnnotationTypeDeclaration || 
+						node instanceof EnumConstantDeclaration) &&
+				node.getParent() instanceof AbstractTypeDeclaration &&
+				!((AbstractTypeDeclaration)node.getParent()).isLocalTypeDeclaration();
+	}
 	
 	@Override
 	public boolean visit(TypeDeclaration typeDeclaration) {
-		vertices.add(typeDeclaration.resolveBinding().getKey());
+		if (isGlobal(typeDeclaration)) {
+			vertices.add(typeDeclaration.resolveBinding().getKey());			
+		}
 		return true;
 	}
 	
 	@Override
 	public boolean visit(MethodDeclaration methodDeclaration) {
-		vertices.add(methodDeclaration.resolveBinding().getKey());
+		if (isGlobal(methodDeclaration)) {
+			vertices.add(methodDeclaration.resolveBinding().getKey());			
+		}
 		return true;
 	}
 
 	@Override
 	public boolean visit(FieldDeclaration node) {
-		for (Object o : node.fragments()) {
-			IVariableBinding b = 
-					((VariableDeclarationFragment)o).resolveBinding();
-			if (b != null) {
-				vertices.add(b.getKey());			
-			}
+		if (isGlobal(node)) {
+			for (Object o : node.fragments()) {
+				IVariableBinding b = 
+						((VariableDeclarationFragment)o).resolveBinding();
+				if (b != null) {
+					vertices.add(b.getKey());			
+				}
+			}			
 		}
 		return true;
 	}
@@ -150,26 +173,34 @@ public class SourceFileAnalyzer extends ASTVisitor {
 
 	@Override
 	public boolean visit(AnnotationTypeDeclaration node) {
-		vertices.add(node.resolveBinding().getKey());
+		if (isGlobal(node)) {
+			vertices.add(node.resolveBinding().getKey());			
+		}
 		return true;
 	}
 
 	@Override
 	public boolean visit(AnnotationTypeMemberDeclaration node) {
-		vertices.add(node.resolveBinding().getKey());
+		if (isGlobal(node)) {
+			vertices.add(node.resolveBinding().getKey());			
+		}
 		return true;
 	}
 
 	@Override
 	public boolean visit(EnumConstantDeclaration node) {
-		vertices.add(node.resolveVariable().getKey());
+		if (isGlobal(node)) {
+			vertices.add(node.resolveVariable().getKey());			
+		}
 		return true;
 	}
 
 	//FIXME enum references cannot be resolved
 	@Override
 	public boolean visit(EnumDeclaration node) {
-		vertices.add(node.resolveBinding().getKey());
+		if (isGlobal(node)) {
+			vertices.add(node.resolveBinding().getKey());			
+		}
 		return true;
 	}
 	
