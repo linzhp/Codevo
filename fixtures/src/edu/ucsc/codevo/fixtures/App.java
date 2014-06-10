@@ -24,12 +24,22 @@ public class App
 	}
 	
 	void run() {
-		
+		new Iterator<String>() {
+			@Override
+			public boolean hasNext() {
+		    	java.io.File file;
+				return false;
+			}
+
+			@Override
+			public String next() {
+				return null;
+			}
+		};
 	}
     public static void main( String[] args )
     {
     	SourceFileAnalyzer s;
-    	java.io.File file;
     	java.io.IOException[] exceptions;
     	Dependency[] dependencies;
     	BigCat cat = BigCat.TIGER;

@@ -6,7 +6,32 @@ import java.util.List;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.ConstructorInvocation;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.IMethodBinding;
+import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.IVariableBinding;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.QualifiedType;
+import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
+import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
+import org.eclipse.jdt.core.dom.SuperFieldAccess;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 public class SourceFileAnalyzer extends ASTVisitor {
 	List<String> vertices = new ArrayList<>();
@@ -27,12 +52,9 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			log(Status.INFO, "Cannot resolve binding for " + sourceNode);
 			return;
 		}
-		while(sourceNode.getNodeType() != ASTNode.METHOD_DECLARATION &&
-				sourceNode.getNodeType() != ASTNode.TYPE_DECLARATION) {
-			sourceNode = sourceNode.getParent();
-			if (sourceNode == null) {
-				return;
-			}
+		sourceNode = getSourceNode(sourceNode);
+		if (sourceNode == null) {
+			return;
 		}
 		IBinding sourceBinding;
 		switch (sourceNode.getNodeType()) {
@@ -46,6 +68,20 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			sourceBinding = null; // should not reach here
 		}
 		edges.add(new Dependency(sourceBinding.getKey(), targetBinding.getKey()));
+	}
+	
+	private ASTNode getSourceNode(ASTNode node) {
+		while (!(node instanceof TypeDeclaration && 
+				!((TypeDeclaration)node).isLocalTypeDeclaration() ||
+				node instanceof MethodDeclaration && 
+				node.getParent() instanceof TypeDeclaration &&
+				!((TypeDeclaration)node.getParent()).isLocalTypeDeclaration())) {
+			node = node.getParent();
+			if (node == null) {
+				return null;
+			}
+		}
+		return node;
 	}
 	
 	@Override

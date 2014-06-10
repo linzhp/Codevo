@@ -129,11 +129,13 @@ public class SourceFileAnalyzerTest {
 	public void shouldGetSimpleTypeReference() {
 		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/String;")));
-		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/File;")));
 	}
 
 	@Test
-	public void shouldGetQualifiedTypeReference() {
+	public void shouldGetTypeReferenceFromLocalClass() {
+		assertThat(getEdges(), hasItemInArray(new HasDependency<>(
+				"Ledu/ucsc/codevo/fixtures/App;.run()V", 
+				"Ljava/io/File;")));
 	}
 
 	@Test
