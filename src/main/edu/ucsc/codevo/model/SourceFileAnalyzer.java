@@ -3,8 +3,6 @@ package edu.ucsc.codevo.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -34,23 +32,21 @@ import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
+import edu.ucsc.codevo.Utils;
+
 public class SourceFileAnalyzer extends ASTVisitor {
 	List<String> vertices = new ArrayList<>();
 	List<Dependency> edges = new ArrayList<>();
 
-	void log(int level, String message) {
-		ResourcesPlugin plugin = ResourcesPlugin.getPlugin();
-		plugin.getBundle().getSymbolicName();
-		ILog logger = plugin.getLog();
-		logger.log(new Status(
-				level, 
-				plugin.getBundle().getSymbolicName(), 
-				message));
-	}
-	
+	/**
+	 * 
+	 * @param sourceNode
+	 * @param targetBinding can be a local type. However, this dependency
+	 * will be ignored eventually, as local types are not added into vertices
+	 */
 	void recordDependency(ASTNode sourceNode, IBinding targetBinding) {
 		if (targetBinding == null) {
-			log(Status.INFO, "Cannot resolve binding for " + sourceNode);
+			Utils.log(Status.INFO, "Cannot resolve binding for " + sourceNode);
 			return;
 		}
 		sourceNode = getSourceNode(sourceNode);
@@ -222,7 +218,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(QualifiedType node) {
 		//FIXME don't know what a QualifiedType node is
-		log(Status.WARNING, 
+		Utils.log(Status.WARNING, 
 			"Finally find out what a QualifiedType is like\n" + node);
 		return true;
 	}

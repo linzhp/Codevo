@@ -4,6 +4,11 @@
 
    <extension
          point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="edu.ucsc.codevo.controller.AnalyzingHandler"
+            id="Codevo.analyze"
+            name="Analyze">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -13,6 +18,19 @@
    </extension>
    <extension
          point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="codevo"
+               label="Codevo">
+            <command
+                  commandId="Codevo.analyze"
+                  label="Analyze"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -22,7 +40,7 @@
       </category>
       <view
             category="Codevo.defaultCategory"
-            class="edu.ucsc.codevo.DependencyView"
+            class="edu.ucsc.codevo.view.DependencyView"
             id="Codevo.dependencyView"
             name="Dependency View"
             restorable="true">
