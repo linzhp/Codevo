@@ -8,7 +8,7 @@ public class EntityLabelProvider extends LabelProvider {
 	  @Override
 	  public String getText(Object element) {
 	    if (element instanceof Entity) {
-	    	return ((Entity)element).toString();
+	    	return ((Entity)element).name;
 	    } else {
 	    	return "";
 	    }

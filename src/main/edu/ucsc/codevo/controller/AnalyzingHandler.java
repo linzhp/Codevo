@@ -56,7 +56,7 @@ public class AnalyzingHandler implements IHandler {
 					}
 				}
 			}
-			DependencyView view = (DependencyView)activePage.showView("Codevo.dependencyView");
+			DependencyView view = (DependencyView)activePage.showView(DependencyView.ID);
 		    view.setInput(analyzer.getEntities());
 		} catch (CoreException e) {
 			e.printStackTrace();

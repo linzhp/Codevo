@@ -9,6 +9,16 @@
             id="Codevo.analyze"
             name="Analyze">
       </command>
+      <command
+            defaultHandler="edu.ucsc.codevo.controller.LayoutHandler"
+            id="Codevo.layout"
+            name="Layout">
+         <commandParameter
+               id="Codevo.layoutAlgorithm"
+               name="algorithm"
+               optional="true">
+         </commandParameter>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -29,6 +39,54 @@
                   label="Analyze"
                   style="push">
             </command>
+            <menu
+                  label="Layout">
+               <command
+                     commandId="Codevo.layout"
+                     label="Spring"
+                     style="push">
+                  <parameter
+                        name="Codevo.layoutAlgorithm"
+                        value="spring">
+                  </parameter>
+               </command>
+               <command
+                     commandId="Codevo.layout"
+                     label="Tree"
+                     style="push">
+                  <parameter
+                        name="Codevo.layoutAlgorithm"
+                        value="tree">
+                  </parameter>
+               </command>
+               <command
+                     commandId="Codevo.layout"
+                     label="Grid"
+                     style="push">
+                  <parameter
+                        name="Codevo.layoutAlgorithm"
+                        value="grid">
+                  </parameter>
+               </command>
+               <command
+                     commandId="Codevo.layout"
+                     label="Horizontal Tree"
+                     style="push">
+                  <parameter
+                        name="Codevo.layoutAlgorithm"
+                        value="horizontal tree">
+                  </parameter>
+               </command>
+               <command
+                     commandId="Codevo.layout"
+                     label="Radial"
+                     style="push">
+                  <parameter
+                        name="Codevo.layoutAlgorithm"
+                        value="radial">
+                  </parameter>
+               </command>
+            </menu>
          </menu>
       </menuContribution>
    </extension>

@@ -45,7 +45,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import edu.ucsc.codevo.Utils;
 
 public class SourceFileAnalyzer extends ASTVisitor {
-	List<String> vertices = new ArrayList<>();
+	List<Entity> vertices = new ArrayList<>();
 	List<Dependency> edges = new ArrayList<>();
 
 	public void add(IJavaProject project) throws CoreException {
@@ -69,8 +69,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	
 	public Entity[] getEntities() {
 		HashMap<String, Entity> entities = new HashMap<>();
-		for (String v : vertices) {
-			entities.put(v, new Entity(v));
+		for (Entity v : vertices) {
+			entities.put(v.key, v);
 		}
 		for (Dependency e : edges) {
 			Entity targetEntity = entities.get(e.target);
@@ -147,7 +147,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(TypeDeclaration typeDeclaration) {
 		if (isGlobal(typeDeclaration)) {
-			vertices.add(typeDeclaration.resolveBinding().getKey());			
+			ITypeBinding b = typeDeclaration.resolveBinding();
+			vertices.add(new Entity(b.getKey(), b.getName()));			
 		}
 		return true;
 	}
@@ -155,7 +156,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(MethodDeclaration methodDeclaration) {
 		if (isGlobal(methodDeclaration)) {
-			vertices.add(methodDeclaration.resolveBinding().getKey());			
+			IMethodBinding b = methodDeclaration.resolveBinding();
+			vertices.add(new Entity(b.getKey(), b.getName()));			
 		}
 		return true;
 	}
@@ -167,7 +169,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 				IVariableBinding b = 
 						((VariableDeclarationFragment)o).resolveBinding();
 				if (b != null) {
-					vertices.add(b.getKey());			
+					vertices.add(new Entity(b.getKey(), b.getName()));			
 				}
 			}			
 		}
@@ -217,7 +219,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(AnnotationTypeDeclaration node) {
 		if (isGlobal(node)) {
-			vertices.add(node.resolveBinding().getKey());			
+			ITypeBinding b = node.resolveBinding();
+			vertices.add(new Entity(b.getKey(), b.getName()));			
 		}
 		return true;
 	}
@@ -225,7 +228,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(AnnotationTypeMemberDeclaration node) {
 		if (isGlobal(node)) {
-			vertices.add(node.resolveBinding().getKey());			
+			IMethodBinding b = node.resolveBinding();
+			vertices.add(new Entity(b.getKey(), b.getName()));			
 		}
 		return true;
 	}
@@ -233,7 +237,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(EnumConstantDeclaration node) {
 		if (isGlobal(node)) {
-			vertices.add(node.resolveVariable().getKey());			
+			IVariableBinding b = node.resolveVariable();
+			vertices.add(new Entity(b.getKey(), b.getName()));			
 		}
 		return true;
 	}
@@ -242,7 +247,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(EnumDeclaration node) {
 		if (isGlobal(node)) {
-			vertices.add(node.resolveBinding().getKey());			
+			ITypeBinding b = node.resolveBinding();
+			vertices.add(new Entity(b.getKey(), b.getName()));			
 		}
 		return true;
 	}

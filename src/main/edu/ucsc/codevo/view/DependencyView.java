@@ -8,29 +8,31 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.layouts.LayoutAlgorithm;
 import org.eclipse.zest.layouts.LayoutStyles;
-import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 
-import edu.ucsc.codevo.controller.*;
-import edu.ucsc.codevo.model.*;
+import edu.ucsc.codevo.controller.EntityDependencyProvider;
+import edu.ucsc.codevo.controller.EntityLabelProvider;
+import edu.ucsc.codevo.model.Entity;
 
 public class DependencyView extends ViewPart {
+	public final static String ID = "Codevo.dependencyView";
 	private GraphViewer viewer;
+
 	public DependencyView() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
-	    viewer = new GraphViewer(parent, SWT.BORDER);
-	    viewer.setContentProvider(new EntityDependencyProvider());
-	    viewer.setLabelProvider(new EntityLabelProvider());
-	    LayoutAlgorithm layout = setLayout();
-	    viewer.setLayoutAlgorithm(layout, true);
-	    parent.addControlListener(new ControlAdapter() {
-	    	@Override
-	    	public void controlResized(final ControlEvent e) {
-	    		viewer.applyLayout();
-	    	}
+		viewer = new GraphViewer(parent, SWT.BORDER);
+		viewer.setContentProvider(new EntityDependencyProvider());
+		viewer.setLabelProvider(new EntityLabelProvider());
+		setLayout();
+		parent.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(final ControlEvent e) {
+				viewer.applyLayout();
+			}
 		});
 	}
 
@@ -38,22 +40,15 @@ public class DependencyView extends ViewPart {
 		viewer.setInput(entities);
 		viewer.applyLayout();
 	}
-	
-	  private LayoutAlgorithm setLayout() {
-	    LayoutAlgorithm layout;
-	    // layout = new
-	    // SpringLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-	    layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-	    // layout = new
-	    // GridLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-	    // layout = new
-	    // HorizontalTreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-	    // layout = new
-	    // RadialLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
-	    return layout;
 
-	  }
-	
+	public void setLayout(LayoutAlgorithm layout) {
+		viewer.setLayoutAlgorithm(layout, true);
+	}
+
+	private void setLayout() {
+		setLayout(new SpringLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
+	}
+
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
