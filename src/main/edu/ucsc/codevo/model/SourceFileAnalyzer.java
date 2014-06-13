@@ -1,10 +1,20 @@
 package edu.ucsc.codevo.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
@@ -38,6 +48,43 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	List<String> vertices = new ArrayList<>();
 	List<Dependency> edges = new ArrayList<>();
 
+	public void add(IJavaProject project) throws CoreException {
+		IPackageFragment[] packages = project.getPackageFragments();
+		for (IPackageFragment p : packages) {
+			if (p.getKind() == IPackageFragmentRoot.K_SOURCE) {
+				for (ICompilationUnit unit : p.getCompilationUnits()) {
+					ASTParser parser = ASTParser.newParser(AST.JLS4);
+					parser.setSource(unit);
+					parser.setResolveBindings(true);
+					@SuppressWarnings("rawtypes")
+					Hashtable options = JavaCore.getOptions();
+					JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+					parser.setCompilerOptions(options);
+					ASTNode ast = parser.createAST(null);
+					ast.accept(this);
+				}
+			}
+		}
+	}
+	
+	public Entity[] getEntities() {
+		HashMap<String, Entity> entities = new HashMap<>();
+		for (String v : vertices) {
+			entities.put(v, new Entity(v));
+		}
+		for (Dependency e : edges) {
+			Entity targetEntity = entities.get(e.target);
+			if (targetEntity != null) {
+				Entity sourceEntity = entities.get(e.source);
+				if (sourceEntity == null) {
+					Utils.log(Status.ERROR, "No entity found for key: " + e.source);
+				} else {
+					sourceEntity.references.add(targetEntity);					
+				}
+			}
+		}
+		return entities.values().toArray(new Entity[entities.size()]);
+	}
 	/**
 	 * 
 	 * @param sourceNode

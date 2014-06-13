@@ -7,7 +7,6 @@ import static org.junit.Assert.assertThat;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -18,14 +17,8 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IClasspathEntry;
-import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.LibraryLocation;
@@ -64,25 +57,8 @@ public class SourceFileAnalyzerTest {
 			FileUtils.copyDirectoryToDirectory(new File("fixtures/src"), project.getLocation().toFile());
 			project.refreshLocal(IProject.DEPTH_INFINITE, null);
 			entries.add(JavaCore.newSourceEntry(project.getFullPath().append("src")));
-			
 			javaProject.setRawClasspath(entries.toArray(new IClasspathEntry[entries.size()]), null);
-			
-			IPackageFragment[] packages = javaProject.getPackageFragments();
-			for (IPackageFragment p : packages) {
-				if (p.getKind() == IPackageFragmentRoot.K_SOURCE) {
-					for (ICompilationUnit unit : p.getCompilationUnits()) {
-						ASTParser parser = ASTParser.newParser(AST.JLS4);
-						parser.setSource(unit);
-						parser.setResolveBindings(true);
-						@SuppressWarnings("rawtypes")
-						Hashtable options = JavaCore.getOptions();
-						JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
-						parser.setCompilerOptions(options);
-						ASTNode ast = parser.createAST(null);
-						ast.accept(analyzer);
-					}
-				}
-			}
+			analyzer.add(javaProject);
 		} catch (IOException | CoreException e1) {
 			e1.printStackTrace();
 			System.exit(1);

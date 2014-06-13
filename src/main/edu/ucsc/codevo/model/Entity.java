@@ -11,4 +11,13 @@ public class Entity {
 		this.key = key;
 		references = new ArrayList<>();
 	}
+	
+	public Entity[] getReferences() {
+		return references.toArray(new Entity[references.size()]);
+	}
+	
+	@Override
+	public String toString() {
+		return key;
+	}
 }

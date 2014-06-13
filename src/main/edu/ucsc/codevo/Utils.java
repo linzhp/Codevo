@@ -14,4 +14,8 @@ public class Utils {
 				plugin.getBundle().getSymbolicName(), 
 				message));
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(null instanceof String);
+	}
 }
