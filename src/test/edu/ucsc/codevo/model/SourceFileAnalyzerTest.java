@@ -67,38 +67,47 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetClassName() {
-		String[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;"));
-		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/Dependency;"));
-		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/BigCat;"));
+		Entity[] vertices = getVertices();
+		assertThat(vertices, hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/App;")));
+		assertThat(vertices, hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/Dependency;")));
+		assertThat(vertices, hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/BigCat;")));
 	}
 	
 	@Test
 	public void shouldGetMethodName() {
-		String[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.main([Ljava/lang/String;)V"));
+		Entity[] vertices = getVertices();
+		assertThat(vertices, hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/App;.main([Ljava/lang/String;)V")));
 	}
 	
 	@Test
 	public void shouldGetFieldName() {
-		assertThat(getVertices(), hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.mode)I"));
+		assertThat(getVertices(), hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/App;.mode)I")));
 	}
 	
 	@Test
 	public void shouldGetConstructor() {
-		String[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.()V"));
-		assertThat(vertices, hasItemInArray("Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V"));
+		Entity[] vertices = getVertices();
+		assertThat(vertices, hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/App;.()V")));
+		assertThat(vertices, hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V")));
 	}
 	
 	@Test
 	public void shouldGetInnerClassName() {
-		assertThat(getVertices(), hasItemInArray("Ledu/ucsc/codevo/fixtures/App$Component;"));		
+		assertThat(getVertices(), hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/App$Component;")));		
 	}
 
 	@Test
 	public void shouldGetInnerClassMethodName() {
-		assertThat(getVertices(), hasItemInArray("Ledu/ucsc/codevo/fixtures/App$Component;.process()V"));		
+		assertThat(getVertices(), hasItemInArray(new HasEntity<>(
+				"Ledu/ucsc/codevo/fixtures/App$Component;.process()V")));		
 	}
 	
 	@Test
@@ -172,9 +181,9 @@ public class SourceFileAnalyzerTest {
 		);
 	}
 	
-	private String[] getVertices() {
-		String[] vertices = analyzer.vertices.toArray(
-				new String[analyzer.vertices.size()]);
+	private Entity[] getVertices() {
+		Entity[] vertices = analyzer.vertices.toArray(
+				new Entity[analyzer.vertices.size()]);
 		return vertices;
 	}
 	
@@ -210,6 +219,21 @@ class HasDependency<T> extends CustomMatcher<T> {
 	public boolean matches(Object item) {
 		Dependency d = (Dependency)item;
 		return d.source.equals(source) && d.target.equals(target);
+	}
+	
+}
+
+class HasEntity<T> extends CustomMatcher<T> {
+	private String key;
+	
+	public HasEntity(String key) {
+		super("a entity " + key);
+		this.key = key;
+	}
+
+	@Override
+	public boolean matches(Object item) {
+		return item.toString().equals(key);
 	}
 	
 }
