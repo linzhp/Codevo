@@ -1,8 +1,6 @@
 package edu.ucsc.codevo.view;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
@@ -28,12 +26,6 @@ public class DependencyView extends ViewPart {
 		viewer.setContentProvider(new EntityDependencyProvider());
 		viewer.setLabelProvider(new EntityLabelProvider());
 		setLayout();
-		parent.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(final ControlEvent e) {
-				viewer.applyLayout();
-			}
-		});
 	}
 
 	public void setInput(Entity[] entities) {
