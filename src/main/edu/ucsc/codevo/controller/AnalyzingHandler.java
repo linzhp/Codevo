@@ -10,6 +10,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -46,6 +48,10 @@ public class AnalyzingHandler implements IHandler {
 					Object element = iterator.next();
 					if (element instanceof IJavaProject) {
 						analyzer.add((IJavaProject)element);
+					} else if (element instanceof IPackageFragmentRoot) {
+						analyzer.add((IPackageFragmentRoot)element);
+					} else if (element instanceof IPackageFragment) {
+						analyzer.add((IPackageFragment)element);
 					}
 				}
 			} else {

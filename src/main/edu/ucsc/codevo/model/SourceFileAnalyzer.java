@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -48,21 +49,37 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	List<Entity> vertices = new ArrayList<>();
 	List<Dependency> edges = new ArrayList<>();
 
-	public void add(IJavaProject project) throws CoreException {
+	public void add(IJavaProject project) throws JavaModelException {
 		IPackageFragment[] packages = project.getPackageFragments();
 		for (IPackageFragment p : packages) {
-			if (p.getKind() == IPackageFragmentRoot.K_SOURCE) {
-				for (ICompilationUnit unit : p.getCompilationUnits()) {
-					ASTParser parser = ASTParser.newParser(AST.JLS4);
-					parser.setSource(unit);
-					parser.setResolveBindings(true);
-					@SuppressWarnings("rawtypes")
-					Hashtable options = JavaCore.getOptions();
-					JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
-					parser.setCompilerOptions(options);
-					ASTNode ast = parser.createAST(null);
-					ast.accept(this);
-				}
+			add(p);
+		}
+	}
+
+	public void add(IPackageFragment p) throws JavaModelException {
+		if (p.getKind() == IPackageFragmentRoot.K_SOURCE) {
+			for (ICompilationUnit unit : p.getCompilationUnits()) {
+				ASTParser parser = ASTParser.newParser(AST.JLS4);
+				parser.setSource(unit);
+				parser.setResolveBindings(true);
+				@SuppressWarnings("rawtypes")
+				Hashtable options = JavaCore.getOptions();
+				JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+				parser.setCompilerOptions(options);
+				ASTNode ast = parser.createAST(null);
+				ast.accept(this);
+			}
+		}
+	}
+
+	public void add(IPackageFragmentRoot sourceFolder) throws JavaModelException {
+		IJavaElement[] packages = sourceFolder.getChildren();
+		for (IJavaElement e : packages) {
+			if (e instanceof IPackageFragment) {
+				add((IPackageFragment) e);
+			} else {
+				Utils.log(Status.WARNING,
+						e.getElementName() + " is not a package fragment");
 			}
 		}
 	}
