@@ -6,7 +6,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.layouts.LayoutAlgorithm;
 import org.eclipse.zest.layouts.LayoutStyles;
-import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.*;
 
 import edu.ucsc.codevo.controller.EntityDependencyProvider;
 import edu.ucsc.codevo.controller.GraphStyleProvider;
@@ -38,7 +38,7 @@ public class DependencyView extends ViewPart {
 	}
 
 	private void setLayout() {
-		setLayout(new SpringLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
+		setLayout(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
 	}
 
 	@Override

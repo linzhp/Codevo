@@ -6,11 +6,7 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.zest.layouts.LayoutStyles;
-import org.eclipse.zest.layouts.algorithms.GridLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.HorizontalLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
-import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
+import org.eclipse.zest.layouts.algorithms.*;
 
 import edu.ucsc.codevo.view.DependencyView;
 
@@ -30,9 +26,13 @@ public class LayoutHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		DependencyView view = (DependencyView)HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().findView(DependencyView.ID);
+		DependencyView view = (DependencyView)HandlerUtil.getActiveWorkbenchWindow(event).
+				getActivePage().findView(DependencyView.ID);
 		String algorithm = event.getParameter("Codevo.layoutAlgorithm");
 		switch (algorithm) {
+		case "directed graph":
+			view.setLayout(new DirectedGraphLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
+			break;
 		case "tree":
 			view.setLayout(new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
 			break;
@@ -42,8 +42,8 @@ public class LayoutHandler implements IHandler {
 		case "grid":
 			view.setLayout(new GridLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
 			break;
-		case "horizontal tree":
-			view.setLayout(new HorizontalLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
+		case "horizontal shift":
+			view.setLayout(new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING));
 			break;
 		case "radial":
 			view.setLayout(new RadialLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING));

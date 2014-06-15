@@ -70,11 +70,11 @@
                </command>
                <command
                      commandId="Codevo.layout"
-                     label="Horizontal Tree"
+                     label="Horizontal Shift"
                      style="push">
                   <parameter
                         name="Codevo.layoutAlgorithm"
-                        value="horizontal tree">
+                        value="horizontal shift">
                   </parameter>
                </command>
                <command
@@ -84,6 +84,15 @@
                   <parameter
                         name="Codevo.layoutAlgorithm"
                         value="radial">
+                  </parameter>
+               </command>
+               <command
+                     commandId="Codevo.layout"
+                     label="Directed Graph"
+                     style="push">
+                  <parameter
+                        name="Codevo.layoutAlgorithm"
+                        value="directed graph">
                   </parameter>
                </command>
             </menu>
