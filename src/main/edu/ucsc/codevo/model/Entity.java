@@ -1,23 +1,40 @@
 package edu.ucsc.codevo.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Entity {
-	String key;
+	public String key;
 	public String name;
-	List<Entity> references;
-	
+	private HashMap<Entity, Integer> references;
+
 	public Entity(String key, String name) {
 		this.key = key;
 		this.name = name;
-		references = new ArrayList<>();
+		references = new HashMap<>();
 	}
-	
+
 	public Entity[] getReferences() {
-		return references.toArray(new Entity[references.size()]);
+		return references.keySet().toArray(new Entity[references.size()]);
 	}
-	
+
+	public void addReference(Entity target) {
+		int weight;
+		if (references.containsKey(target)) {
+			weight = references.get(target) + 1;
+		} else {
+			weight = 1;
+		}
+		references.put(target, weight);
+	}
+
+	public int getReferencesTo(Object target) {
+		if (references.containsKey(target)) {
+			return references.get(target);
+		} else {
+			return 0;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return key;

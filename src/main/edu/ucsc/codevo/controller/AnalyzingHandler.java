@@ -57,7 +57,7 @@ public class AnalyzingHandler implements IHandler {
 				}
 			}
 			DependencyView view = (DependencyView)activePage.showView(DependencyView.ID);
-		    view.setInput(analyzer.getEntities());
+			view.setInput(analyzer.getGraph().getClassEntities());
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

@@ -9,7 +9,7 @@ import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 
 import edu.ucsc.codevo.controller.EntityDependencyProvider;
-import edu.ucsc.codevo.controller.EntityLabelProvider;
+import edu.ucsc.codevo.controller.GraphStyleProvider;
 import edu.ucsc.codevo.model.Entity;
 
 public class DependencyView extends ViewPart {
@@ -24,7 +24,7 @@ public class DependencyView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		viewer = new GraphViewer(parent, SWT.BORDER);
 		viewer.setContentProvider(new EntityDependencyProvider());
-		viewer.setLabelProvider(new EntityLabelProvider());
+		viewer.setLabelProvider(new GraphStyleProvider());
 		setLayout();
 	}
 

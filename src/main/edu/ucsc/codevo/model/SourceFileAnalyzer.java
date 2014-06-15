@@ -1,7 +1,6 @@
 package edu.ucsc.codevo.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -43,6 +42,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import edu.ucsc.codevo.Utils;
+import edu.ucsc.codevo.controller.GraphInput;
 
 public class SourceFileAnalyzer extends ASTVisitor {
 	List<Entity> vertices = new ArrayList<>();
@@ -66,24 +66,11 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			}
 		}
 	}
-	
-	public Entity[] getEntities() {
-		HashMap<String, Entity> entities = new HashMap<>();
-		for (Entity v : vertices) {
-			entities.put(v.key, v);
-		}
-		for (Dependency e : edges) {
-			Entity targetEntity = entities.get(e.target);
-			if (targetEntity != null) {
-				Entity sourceEntity = entities.get(e.source);
-				if (sourceEntity == null) {
-					Utils.log(Status.ERROR, "No entity found for key: " + e.source);
-				} else {
-					sourceEntity.references.add(targetEntity);					
-				}
-			}
-		}
-		return entities.values().toArray(new Entity[entities.size()]);
+
+	public GraphInput getGraph() {
+		return new GraphInput(
+				vertices.toArray(new Entity[vertices.size()]),
+				edges.toArray(new Dependency[edges.size()]));
 	}
 	/**
 	 * 
@@ -120,7 +107,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		}
 		edges.add(new Dependency(sourceBinding.getKey(), targetBinding.getKey()));
 	}
-	
+
 	private ASTNode getSourceNode(ASTNode node) {
 		while (!isGlobal(node)) {
 			node = node.getParent();
@@ -132,32 +119,36 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	}
 
 	private boolean isGlobal(ASTNode node) {
-		return node instanceof AbstractTypeDeclaration && 
+		return node instanceof AbstractTypeDeclaration &&
 				!((AbstractTypeDeclaration)node).isLocalTypeDeclaration() ||
 				// excluding super type, type parameters, whose parents are also AbstractTypeDeclaration
 				// TODO consider inheritance later
-				(node instanceof FieldDeclaration || 
+				(node instanceof FieldDeclaration ||
 						node instanceof MethodDeclaration ||
-						node instanceof AnnotationTypeDeclaration || 
+						node instanceof AnnotationTypeDeclaration ||
 						node instanceof EnumConstantDeclaration) &&
-				node.getParent() instanceof AbstractTypeDeclaration &&
-				!((AbstractTypeDeclaration)node.getParent()).isLocalTypeDeclaration();
+						node.getParent() instanceof AbstractTypeDeclaration &&
+						!((AbstractTypeDeclaration)node.getParent()).isLocalTypeDeclaration();
 	}
-	
+
 	@Override
 	public boolean visit(TypeDeclaration typeDeclaration) {
 		if (isGlobal(typeDeclaration)) {
 			ITypeBinding b = typeDeclaration.resolveBinding();
-			vertices.add(new Entity(b.getKey(), b.getName()));			
+			if (b != null) {
+				vertices.add(new Entity(b.getKey(), b.getName()));
+			}
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean visit(MethodDeclaration methodDeclaration) {
 		if (isGlobal(methodDeclaration)) {
 			IMethodBinding b = methodDeclaration.resolveBinding();
-			vertices.add(new Entity(b.getKey(), b.getName()));			
+			if (b != null) {
+				vertices.add(new Entity(b.getKey(), b.getName()));
+			}
 		}
 		return true;
 	}
@@ -166,12 +157,12 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(FieldDeclaration node) {
 		if (isGlobal(node)) {
 			for (Object o : node.fragments()) {
-				IVariableBinding b = 
+				IVariableBinding b =
 						((VariableDeclarationFragment)o).resolveBinding();
 				if (b != null) {
-					vertices.add(new Entity(b.getKey(), b.getName()));			
+					vertices.add(new Entity(b.getKey(), b.getName()));
 				}
-			}			
+			}
 		}
 		return true;
 	}
@@ -183,14 +174,14 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		// already get everything we need from this subtree
 		return false;
 	}
-	
+
 	@Override
 	public boolean visit(FieldAccess node) {
 		IVariableBinding b = node.resolveFieldBinding();
 		recordDependency(node, b);
 		return true;
 	}
-	
+
 	@Override
 	public boolean visit(MethodInvocation node) {
 		IMethodBinding b = node.resolveMethodBinding();
@@ -204,7 +195,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		recordDependency(node, b);
 		return true;
 	}
-	
+
 	/**
 	 * Can only handle the invocations between constructors,
 	 * not class instance creation
@@ -220,7 +211,9 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(AnnotationTypeDeclaration node) {
 		if (isGlobal(node)) {
 			ITypeBinding b = node.resolveBinding();
-			vertices.add(new Entity(b.getKey(), b.getName()));			
+			if (b != null) {
+				vertices.add(new Entity(b.getKey(), b.getName()));
+			}
 		}
 		return true;
 	}
@@ -229,7 +222,9 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(AnnotationTypeMemberDeclaration node) {
 		if (isGlobal(node)) {
 			IMethodBinding b = node.resolveBinding();
-			vertices.add(new Entity(b.getKey(), b.getName()));			
+			if (b != null) {
+				vertices.add(new Entity(b.getKey(), b.getName()));
+			}
 		}
 		return true;
 	}
@@ -238,7 +233,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(EnumConstantDeclaration node) {
 		if (isGlobal(node)) {
 			IVariableBinding b = node.resolveVariable();
-			vertices.add(new Entity(b.getKey(), b.getName()));			
+			vertices.add(new Entity(b.getKey(), b.getName()));
 		}
 		return true;
 	}
@@ -248,11 +243,13 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(EnumDeclaration node) {
 		if (isGlobal(node)) {
 			ITypeBinding b = node.resolveBinding();
-			vertices.add(new Entity(b.getKey(), b.getName()));			
+			if (b != null) {
+				vertices.add(new Entity(b.getKey(), b.getName()));
+			}
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean visit(MarkerAnnotation node) {
 		IBinding b = node.resolveAnnotationBinding();
@@ -271,8 +268,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(QualifiedType node) {
 		//FIXME don't know what a QualifiedType node is
-		Utils.log(Status.WARNING, 
-			"Finally find out what a QualifiedType is like\n" + node);
+		Utils.log(Status.WARNING,
+				"Finally find out what a QualifiedType is like\n" + node);
 		return true;
 	}
 
@@ -282,7 +279,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		recordDependency(node, b);
 		return true;
 	}
-	
+
 	@Override
 	public boolean visit(SuperConstructorInvocation node) {
 		IBinding b = node.resolveConstructorBinding();
@@ -296,7 +293,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		recordDependency(node, b);
 		return true;
 	}
-	
+
 	@Override
 	public boolean visit(SuperMethodInvocation node) {
 		IBinding b = node.resolveMethodBinding();
