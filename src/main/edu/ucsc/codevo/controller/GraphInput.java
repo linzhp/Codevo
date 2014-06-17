@@ -16,19 +16,23 @@ public class GraphInput {
 
 	public Entity[] getClassEntities() {
 		if (classEntities == null) {
-			HashMap<ITypeBinding, Entity> entities = new HashMap<>();
+			HashMap<String, Entity> entities = new HashMap<>();
 			for (IBinding b : vertices) {
-				ITypeBinding key;
-				key = getClass(b);
+				ITypeBinding classBinding = getClass(b);
+				String key = classBinding.getKey();
 				if (!entities.containsKey(key)) {
 					// the entity is a class
-					entities.put(key, new Entity(key));
+					entities.put(key, new Entity(classBinding));
 				}
 			}
 			for (Dependency d : edges) {
-				Entity targetEntity = entities.get(getClass(d.target));
+				ITypeBinding targetClassBinding = getClass(d.target);
+				Entity targetEntity = null;
+				if (targetClassBinding != null) {
+					targetEntity = entities.get(targetClassBinding.getKey());
+				}
 				if (targetEntity != null) {
-					Entity sourceEntity = entities.get(getClass(d.source));
+					Entity sourceEntity = entities.get(getClass(d.source).getKey());
 					if (sourceEntity == null) {
 						Utils.log(Status.ERROR, "No entity found for binding: " + d.source.getKey());
 					} else if (sourceEntity != targetEntity){
@@ -56,14 +60,14 @@ public class GraphInput {
 
 	public Entity[] getMethodEntities() {
 		if (methodEntities == null) {
-			HashMap<IBinding, Entity> entities = new HashMap<>();
+			HashMap<String, Entity> entities = new HashMap<>();
 			for (IBinding v : vertices) {
-				entities.put(v, new Entity(v));
+				entities.put(v.getKey(), new Entity(v));
 			}
 			for (Dependency e : edges) {
-				Entity targetEntity = entities.get(e.target);
+				Entity targetEntity = entities.get(e.target.getKey());
 				if (targetEntity != null) {
-					Entity sourceEntity = entities.get(e.source);
+					Entity sourceEntity = entities.get(e.source.getKey());
 					if (sourceEntity == null) {
 						Utils.log(Status.ERROR, "No entity found for key: " + e.source.getKey());
 					} else {
