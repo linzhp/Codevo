@@ -63,7 +63,8 @@ public class AnalyzingHandler implements IHandler {
 				}
 			}
 			DependencyView view = (DependencyView)activePage.showView(DependencyView.ID);
-			view.setInput(analyzer.getGraph().getClassEntities());
+			GraphInput graph = new GraphInput(analyzer.getVertices(), analyzer.getEdges());
+			view.setInput(graph.getClassEntities());
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

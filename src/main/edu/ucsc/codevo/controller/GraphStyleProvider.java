@@ -14,7 +14,7 @@ implements IEntityStyleProvider, IEntityConnectionStyleProvider {
 	@Override
 	public String getText(Object element) {
 		if (element instanceof Entity) {
-			return ((Entity)element).name;
+			return ((Entity)element).getName();
 		} else {
 			return "";
 		}

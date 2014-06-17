@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.LibraryLocation;
@@ -38,21 +39,21 @@ public class SourceFileAnalyzerTest {
 			IWorkspaceRoot root = workspace.getRoot();
 			IProject project = root.getProject("fixtureProject");
 			if (!project.exists()) {
-				project.create(null);	
+				project.create(null);
 			}
 			project.open(null);
-			
+
 			IProjectDescription description = project.getDescription();
 			description.setNatureIds(new String[] { JavaCore.NATURE_ID });
 			project.setDescription(description, null);
-			
+
 			IJavaProject javaProject = JavaCore.create(project);
-			
+
 			List<IClasspathEntry> entries = new ArrayList<IClasspathEntry>();
 			IVMInstall vmInstall = JavaRuntime.getDefaultVMInstall();
 			LibraryLocation[] locations = JavaRuntime.getLibraryLocations(vmInstall);
 			for (LibraryLocation element : locations) {
-			 entries.add(JavaCore.newLibraryEntry(element.getSystemLibraryPath(), null, null));
+				entries.add(JavaCore.newLibraryEntry(element.getSystemLibraryPath(), null, null));
 			}
 			FileUtils.copyDirectoryToDirectory(new File("fixtures/src"), project.getLocation().toFile());
 			project.refreshLocal(IProject.DEPTH_INFINITE, null);
@@ -67,7 +68,7 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetClassName() {
-		Entity[] vertices = getVertices();
+		IBinding[] vertices = getVertices();
 		assertThat(vertices, hasItemInArray(new HasEntity<>(
 				"Ledu/ucsc/codevo/fixtures/App;")));
 		assertThat(vertices, hasItemInArray(new HasEntity<>(
@@ -75,41 +76,40 @@ public class SourceFileAnalyzerTest {
 		assertThat(vertices, hasItemInArray(new HasEntity<>(
 				"Ledu/ucsc/codevo/fixtures/BigCat;")));
 	}
-	
+
 	@Test
 	public void shouldGetMethodName() {
-		Entity[] vertices = getVertices();
-		assertThat(vertices, hasItemInArray(new HasEntity<>(
+		assertThat(getVertices(), hasItemInArray(new HasEntity<>(
 				"Ledu/ucsc/codevo/fixtures/App;.main([Ljava/lang/String;)V")));
 	}
-	
+
 	@Test
 	public void shouldGetFieldName() {
 		assertThat(getVertices(), hasItemInArray(new HasEntity<>(
 				"Ledu/ucsc/codevo/fixtures/App;.mode)I")));
 	}
-	
+
 	@Test
 	public void shouldGetConstructor() {
-		Entity[] vertices = getVertices();
+		IBinding[] vertices = getVertices();
 		assertThat(vertices, hasItemInArray(new HasEntity<>(
 				"Ledu/ucsc/codevo/fixtures/App;.()V")));
 		assertThat(vertices, hasItemInArray(new HasEntity<>(
 				"Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V")));
 	}
-	
+
 	@Test
 	public void shouldGetInnerClassName() {
 		assertThat(getVertices(), hasItemInArray(new HasEntity<>(
-				"Ledu/ucsc/codevo/fixtures/App$Component;")));		
+				"Ledu/ucsc/codevo/fixtures/App$Component;")));
 	}
 
 	@Test
 	public void shouldGetInnerClassMethodName() {
 		assertThat(getVertices(), hasItemInArray(new HasEntity<>(
-				"Ledu/ucsc/codevo/fixtures/App$Component;.process()V")));		
+				"Ledu/ucsc/codevo/fixtures/App$Component;.process()V")));
 	}
-	
+
 	@Test
 	public void shouldGetSimpleTypeReference() {
 		Dependency[] edges = getEdges();
@@ -119,7 +119,7 @@ public class SourceFileAnalyzerTest {
 	@Test
 	public void shouldGetTypeReferenceFromLocalClass() {
 		assertThat(getEdges(), hasItemInArray(new HasDependency<>(
-				"Ledu/ucsc/codevo/fixtures/App;.run()V", 
+				"Ledu/ucsc/codevo/fixtures/App;.run()V",
 				"Ljava/io/File;")));
 	}
 
@@ -132,22 +132,22 @@ public class SourceFileAnalyzerTest {
 	@Test
 	public void shouldGetFieldAccessInMethodInvocationReceiver() {
 		Dependency[] edges = getEdges();
-		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/System;.out)Ljava/io/PrintStream;")));		
+		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/System;.out)Ljava/io/PrintStream;")));
 	}
-	
+
 	@Test
 	public void shouldGetFieldAccessInFieldAccessReceiver() {
 		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>(
-				"Ledu/ucsc/codevo/fixtures/App$Component;.module)Ledu/ucsc/codevo/fixtures/App$Module;")));		
+				"Ledu/ucsc/codevo/fixtures/App$Component;.module)Ledu/ucsc/codevo/fixtures/App$Module;")));
 	}
-	
+
 	@Test
 	public void shouldGetFieldAccess() {
 		assertThat(getEdges(),hasItemInArray(new HasTarget<>(
 				"Ledu/ucsc/codevo/fixtures/App$Module;.state)I")));
 	}
-	
+
 	@Test
 	public void shouldGetArrayQualifiedTypeReference() {
 		Dependency[] edges = getEdges();
@@ -162,7 +162,7 @@ public class SourceFileAnalyzerTest {
 				"Ledu/ucsc/codevo/fixtures/Dependency;")
 				));
 	}
-	
+
 	@Test
 	public void shouldGetConstructorInvocation() {
 		Dependency[] edges = getEdges();
@@ -173,20 +173,20 @@ public class SourceFileAnalyzerTest {
 	@Test
 	public void shouldGetParameterizedType() {
 		assertThat(
-				getEdges(), 
+				getEdges(),
 				hasItemInArray(new HasDependency<>(
 						"Ledu/ucsc/codevo/fixtures/Dependency;.toString()Ljava/lang/String;",
 						"Ledu/ucsc/codevo/fixtures/App$Component;")
-				)
-		);
+						)
+				);
 	}
-	
-	private Entity[] getVertices() {
-		Entity[] vertices = analyzer.vertices.toArray(
-				new Entity[analyzer.vertices.size()]);
+
+	private IBinding[] getVertices() {
+		IBinding[] vertices = analyzer.vertices.toArray(
+				new IBinding[analyzer.vertices.size()]);
 		return vertices;
 	}
-	
+
 	private Dependency[] getEdges() {
 		return analyzer.edges.toArray(new Dependency[analyzer.edges.size()]);
 	}
@@ -194,7 +194,7 @@ public class SourceFileAnalyzerTest {
 
 class HasTarget<T> extends CustomMatcher<T> {
 	private String target;
-	
+
 	public HasTarget(String target) {
 		super("a dependency on " + target);
 		this.target = target;
@@ -202,7 +202,7 @@ class HasTarget<T> extends CustomMatcher<T> {
 
 	@Override
 	public boolean matches(Object item) {
-		return ((Dependency)item).target.equals(target);
+		return ((Dependency)item).target.getKey().equals(target);
 	}
 }
 
@@ -218,14 +218,14 @@ class HasDependency<T> extends CustomMatcher<T> {
 	@Override
 	public boolean matches(Object item) {
 		Dependency d = (Dependency)item;
-		return d.source.equals(source) && d.target.equals(target);
+		return d.source.getKey().equals(source) && d.target.getKey().equals(target);
 	}
-	
+
 }
 
 class HasEntity<T> extends CustomMatcher<T> {
 	private String key;
-	
+
 	public HasEntity(String key) {
 		super("a entity " + key);
 		this.key = key;
@@ -233,7 +233,7 @@ class HasEntity<T> extends CustomMatcher<T> {
 
 	@Override
 	public boolean matches(Object item) {
-		return item.toString().equals(key);
+		return ((IBinding)item).getKey().equals(key);
 	}
-	
+
 }

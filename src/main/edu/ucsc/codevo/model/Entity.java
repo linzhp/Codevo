@@ -2,14 +2,14 @@ package edu.ucsc.codevo.model;
 
 import java.util.HashMap;
 
+import org.eclipse.jdt.core.dom.IBinding;
+
 public class Entity {
-	public String key;
-	public String name;
+	public IBinding binding;
 	private HashMap<Entity, Integer> references;
 
-	public Entity(String key, String name) {
-		this.key = key;
-		this.name = name;
+	public Entity(IBinding binding) {
+		this.binding = binding;
 		references = new HashMap<>();
 	}
 
@@ -35,8 +35,12 @@ public class Entity {
 		}
 	}
 
+	public String getName() {
+		return binding.getName();
+	}
+
 	@Override
 	public String toString() {
-		return key;
+		return binding.getKey();
 	}
 }

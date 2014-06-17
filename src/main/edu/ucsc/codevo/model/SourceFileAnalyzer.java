@@ -43,10 +43,9 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import edu.ucsc.codevo.Utils;
-import edu.ucsc.codevo.controller.GraphInput;
 
 public class SourceFileAnalyzer extends ASTVisitor {
-	List<Entity> vertices = new ArrayList<>();
+	List<IBinding> vertices = new ArrayList<>();
 	List<Dependency> edges = new ArrayList<>();
 
 	public void add(IJavaProject project) throws JavaModelException {
@@ -84,11 +83,14 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		}
 	}
 
-	public GraphInput getGraph() {
-		return new GraphInput(
-				vertices.toArray(new Entity[vertices.size()]),
-				edges.toArray(new Dependency[edges.size()]));
+	public IBinding[] getVertices() {
+		return vertices.toArray(new IBinding[vertices.size()]);
 	}
+
+	public Dependency[] getEdges() {
+		return edges.toArray(new Dependency[edges.size()]);
+	}
+
 	/**
 	 * 
 	 * @param sourceNode
@@ -122,7 +124,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		default:
 			sourceBinding = null; // should not reach here
 		}
-		edges.add(new Dependency(sourceBinding.getKey(), targetBinding.getKey()));
+		edges.add(new Dependency(sourceBinding, targetBinding));
 	}
 
 	private ASTNode getSourceNode(ASTNode node) {
@@ -153,7 +155,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		if (isGlobal(typeDeclaration)) {
 			ITypeBinding b = typeDeclaration.resolveBinding();
 			if (b != null) {
-				vertices.add(new Entity(b.getKey(), b.getName()));
+				vertices.add(b);
 			}
 		}
 		return true;
@@ -164,7 +166,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		if (isGlobal(methodDeclaration)) {
 			IMethodBinding b = methodDeclaration.resolveBinding();
 			if (b != null) {
-				vertices.add(new Entity(b.getKey(), b.getName()));
+				vertices.add(b);
 			}
 		}
 		return true;
@@ -177,7 +179,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 				IVariableBinding b =
 						((VariableDeclarationFragment)o).resolveBinding();
 				if (b != null) {
-					vertices.add(new Entity(b.getKey(), b.getName()));
+					vertices.add(b);
 				}
 			}
 		}
@@ -229,7 +231,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		if (isGlobal(node)) {
 			ITypeBinding b = node.resolveBinding();
 			if (b != null) {
-				vertices.add(new Entity(b.getKey(), b.getName()));
+				vertices.add(b);
 			}
 		}
 		return true;
@@ -240,7 +242,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		if (isGlobal(node)) {
 			IMethodBinding b = node.resolveBinding();
 			if (b != null) {
-				vertices.add(new Entity(b.getKey(), b.getName()));
+				vertices.add(b);
 			}
 		}
 		return true;
@@ -250,7 +252,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(EnumConstantDeclaration node) {
 		if (isGlobal(node)) {
 			IVariableBinding b = node.resolveVariable();
-			vertices.add(new Entity(b.getKey(), b.getName()));
+			vertices.add(b);
 		}
 		return true;
 	}
@@ -261,7 +263,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		if (isGlobal(node)) {
 			ITypeBinding b = node.resolveBinding();
 			if (b != null) {
-				vertices.add(new Entity(b.getKey(), b.getName()));
+				vertices.add(b);
 			}
 		}
 		return true;
@@ -269,7 +271,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 
 	@Override
 	public boolean visit(MarkerAnnotation node) {
-		IBinding b = node.resolveAnnotationBinding();
+		IBinding b = node.resolveAnnotationBinding().getAnnotationType();
 		recordDependency(node, b);
 		return true;
 	}
@@ -292,7 +294,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 
 	@Override
 	public boolean visit(SingleMemberAnnotation node) {
-		IBinding b = node.resolveAnnotationBinding();
+		ITypeBinding b = node.resolveAnnotationBinding().getAnnotationType();
 		recordDependency(node, b);
 		return true;
 	}
