@@ -1,25 +1,11 @@
 package edu.ucsc.codevo.controller;
 
-import java.util.Iterator;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.handlers.HandlerUtil;
-
-import edu.ucsc.codevo.model.SourceFileAnalyzer;
-import edu.ucsc.codevo.view.DependencyView;
 
 public class AnalyzingHandler implements IHandler {
 
@@ -37,37 +23,9 @@ public class AnalyzingHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		try {
-			SourceFileAnalyzer analyzer = new SourceFileAnalyzer();
-			IWorkbenchPage activePage = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
-			ISelection selection = activePage.getSelection();
-			if (selection instanceof IStructuredSelection) {
-				@SuppressWarnings("rawtypes")
-				Iterator iterator = ((IStructuredSelection)selection).iterator();
-				while (iterator.hasNext()) {
-					Object element = iterator.next();
-					if (element instanceof IJavaProject) {
-						analyzer.add((IJavaProject)element);
-					} else if (element instanceof IPackageFragmentRoot) {
-						analyzer.add((IPackageFragmentRoot)element);
-					} else if (element instanceof IPackageFragment) {
-						analyzer.add((IPackageFragment)element);
-					}
-				}
-			} else {
-				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-				for (IProject p : projects) {
-					if (p.isNatureEnabled(JavaCore.NATURE_ID)) {
-						analyzer.add(JavaCore.create(p));
-					}
-				}
-			}
-			DependencyView view = (DependencyView)activePage.showView(DependencyView.ID);
-			GraphInput graph = new GraphInput(analyzer.getVertices(), analyzer.getEdges());
-			view.setInput(graph.getClassEntities());
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+		Job job = new AnalyzingJob(
+				HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection());
+		job.schedule();
 		return null;
 	}
 
