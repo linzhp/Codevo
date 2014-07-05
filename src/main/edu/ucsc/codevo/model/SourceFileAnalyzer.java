@@ -58,12 +58,12 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public void add(IPackageFragment p) throws JavaModelException {
 		if (p.getKind() == IPackageFragmentRoot.K_SOURCE) {
 			for (ICompilationUnit unit : p.getCompilationUnits()) {
-				ASTParser parser = ASTParser.newParser(AST.JLS4);
+				ASTParser parser = ASTParser.newParser(AST.JLS8);
 				parser.setSource(unit);
 				parser.setResolveBindings(true);
 				@SuppressWarnings("rawtypes")
 				Hashtable options = JavaCore.getOptions();
-				JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+				JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
 				parser.setCompilerOptions(options);
 				ASTNode ast = parser.createAST(null);
 				ast.accept(this);
@@ -92,7 +92,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param sourceNode
 	 * @param targetBinding can be a local type. However, this dependency
 	 * will be ignored eventually, as local types are not added into vertices
