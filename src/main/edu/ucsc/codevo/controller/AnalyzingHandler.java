@@ -5,6 +5,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class AnalyzingHandler implements IHandler {
@@ -23,8 +24,8 @@ public class AnalyzingHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Job job = new AnalyzingJob(
-				HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection());
+		IWorkbenchPage activePage = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
+		Job job = new AnalyzingJob(activePage);
 		job.schedule();
 		return null;
 	}

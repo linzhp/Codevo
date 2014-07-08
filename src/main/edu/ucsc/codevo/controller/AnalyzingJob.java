@@ -19,23 +19,23 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 import edu.ucsc.codevo.model.SourceFileAnalyzer;
 import edu.ucsc.codevo.view.DependencyView;
 
 public class AnalyzingJob extends Job {
-	private ISelection selection;
+	private IWorkbenchPage activePage;
 
-	public AnalyzingJob(ISelection selection) {
+	public AnalyzingJob(IWorkbenchPage activePage) {
 		super("Analyzing Job");
-		this.selection = selection;
+		this.activePage = activePage;
 	}
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		try {
 			final SourceFileAnalyzer analyzer = new SourceFileAnalyzer();
+			ISelection selection = activePage.getSelection();
 			if (selection instanceof IStructuredSelection) {
 				monitor.beginTask("Analyzing selection", ((IStructuredSelection) selection).size());
 				@SuppressWarnings("rawtypes")
@@ -68,7 +68,6 @@ public class AnalyzingJob extends Job {
 				@Override
 				public void run() {
 					GraphInput graph = new GraphInput(analyzer.getVertices(), analyzer.getEdges());
-					IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					try {
 						DependencyView view = (DependencyView)activePage.showView(DependencyView.ID);
 						view.setInput(graph.getClassEntities());
