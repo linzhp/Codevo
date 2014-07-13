@@ -1,0 +1,701 @@
+44f1162f18f79cebeb0a675247c21aa0e1850e90: Merge branch 'rebalancing-tools' into release-070
+b14fa21c36c2124c50a9c72a1c70ab0520b860f2: Placeholder code for targetCluster.xml generation.
+e153bcf8b95d7f61af12db15a1efa7727de25973: Manually merged/fixed portion of AbstractStoreClientFactory.
+8987e8a49c293ea8b588939fc32119c1dc50063e: Added sample usage information.
+d624d3359baa795d7c0f410e64856b87359d8d65: Renamed TargetClusterGenerator to RebalanceClusterTool.
+113af339162b9e2699f50a10cf96f740cac2fad4: ClusterViewer: cleanup, using TargetClusterGenerator for most logic.
+60f8ad9817955b2c6d71add678a08e9f4e464586: TargetClusterGenerator: code cleanup, return data.
+89ef518074a4cc4c610120a435829665a495390d: Merge branch 'release-070' into rebalancing-tools
+af23673897bf1b41dd2a2279d71e73a6ce524e99: Merge remote branch 'trunk/release-070' into release-070
+25b908426648f6d49c23f8c5118d3ec3cb590922: Formating changes.
+6f183ea3e278046f859bd4a07213d984da5518b7: Initial import of a targetCluster.xml generator.
+f130c38e99e9ce6ce019b6929ded2d75282d657b: Tool to view partition replica mappings.
+4a2b49010badcdf724db1fef9f74cb7c5b3a51c2: Fixed failing testRecoverData.
+6726ab4512df380a3020a79327c2cfa1a4330903: Added different seed random number for rebalance.
+e701860ceb09653a7e561cbbe4b71311f5080516: rebalancing fixes redirectingSocketStore race condition & failureDetector new nodes.
+f3d9cd882f877d41d5df77ff49ff6d6f90adeafa: Adding read-only store compression.
+2db079513b2849316d17ddf5f251abb45fe52390: Merge remote branch 'trunk/release-070' into release-070
+454597def7d70a549db89e2bba9c4809582d75d0: Fixed conflicts after log changed commit.
+33d85e25c3488bf3277bc5fb3f5ee0fa8216db71: some log changes.
+54e5737b9711f15182ab9f7c3a96bdf35f5618b6: Cleanup and documentation.
+8d7cec5535ab745c3b5899bc8acbe29b78ae3345: Got rid of a potential concurrency issue by copying the LRUMap's keySet into an ImmutableSet.
+2a42e63e7ea8ed06facf9b7e68671bcd2345c8a6: changed default. maxBootstraptries to 2.
+7f26355f319219424bc530a6a5703e426856b282: Issue:191 added jmx for defaultStoreclient to do re-bootstrapping.
+8830901c94e0bad3b38a08e9f366c2185a0466e0: Added test for consistent routing changes.
+9e4ca1fefec45a30d6089e7c3087fd0eb7c454a4: Merge branch 'master' of github.com:voldemort/voldemort
+e44cf611e49d5d79bf6fe49d0b6a9d52dcd31bc4: Added restoreData() support Issue:188
+36575a5fcedc8c1f32033b23c7a23d9584b7665b: Merge commit 'upstream/master' into availability
+5e8b86dcaccb5bcd6c1650b5946f8fc42d9695eb: Updated to use only the node ID instead of the Node class' toString method to prevent breakage.
+88bd65909b82b75247ce50f1f7cb12d3cd9e3c50: Merge branch 'rebalancing' of github.com:bbansal/voldemort
+b76b3f66586b7a3b9099df7a108964a8ba55577e: updated rebalance command shell.
+d04571028b7c1d82e080de866833cbbc3df20fcf: Overriding fillinstacktrace at alex's suggestion.
+cf8adb6763183536c8bde50d29e6d03975cfdbfb: Merge branch 'master' of git://github.com/mfr0st/voldemort
+fb948b22adb0d0a62401d6c0fe981ec668695390: refactoring.
+5f1300a9022bd782c09a3034d3d6a8e1defe280b: Added new rebalancingProxy Unreachable exception.
+08b31c046b8be4c54d73bb109685d2dbba0f3a44: Merged with trunk and added rebalancingProxyUnreachable Exception.
+6c8e5e017f3e89a93beffd8a754dcc5d2024eaa7: Merge branch 'master' of github.com:voldemort/voldemort
+f77be6f063214d91daf3a4b465546068fd1420e9: Added read-only store to rebalanceBlackList.
+6d9c464d6ae93e768781c08c5b1d7396ea903518: renamed rebalancingRoutedStore.
+75f3f1a4a15151eb47bc9e5f59d02e80504ecd2c: Minor fix in Javadoc.
+7044682fd98736af1177a9af3c9431c4b2655473: ProtoBuffAdminServiceRequestHandler -> AdminServiceRequestHandler.
+d9f32679b164ac0c56a722999cc1f1c3df6916fc: Changes to the shell, the test. Cleanup of backup files.
+7d06687554d8e94a46942bb9d970f89c37e77320: Fix for bug 187. Modified ReadOnlyStorageEngine.swapFiles to throw an exception when the swap fails. Note that logging the failure is now the responsibility of the caller/exception handler (which is correctly handled in ReadOnlyStoreManagementServlet).  All rollback/recover logic should still function correctly.  Added test coverage for the new behavior.
+9c35a4a25b38ae80bfee2a3f2b83f7ee407f3fdb: Added some logging for clean stopping().
+e26d1269a2f533d15c3f51386c8001f7d56c2f5f: removed unintentional comment from RebalanceController.
+decc92a07e4a43a4f98eb84f1c87a9054ca07a21: Added stop() support in rebalance async operation.
+35aeddc7c080f5c2ca6310e4d9af0e06f92ed74c: Improved error messages.
+8b21714c693bb971f075162d4bbbf24102600aae: Merge branch 'rebalancing' of git://github.com/afeinberg/voldemort into rebalancing
+7b6eee6c8d97b7b99640d46521b3983fd9831292: Added new AlreadyRebalancingException to finer control at RebalancingController.
+4e6992d168a9f2107bbba298d1f6513c6e9176a5: Making fields in response objects optional.
+16934de6589a0a997a717635daa0a6e0113d9406: Checked rebalancing with proxy get on remote machines.
+aaa5ff5a126d057b77fe815d4750aafcf538e1e7: moved createRedirectingSocketStore to RedirectingStore.
+9febb9f6f7b603c3253c64a5c70ff9f1970b76a2: Added VoldemortApplicationException handling inside GetCallable/ GetAllCallable.
+4bff8027f67df7feb14edd48a82ffe980f6135aa: Merge commit 'upstream/master' into availability
+a0002a2522309d4e4bd8e7d4bf3e43545cd6d5c5: Changed InvalidMetadataException handling after RoutedStoreChange.
+4b4d50d148f06e324771f898a66d3829dd71ce98: Changed RoutedStore to throw exceptions.
+15aed92a31999679a2c52841374a05e8fac5dfe8: Changed Exception handling in RoutedStore.
+e3c266c22cd7ef5a43a1b267299b6836662e6533: small fix in bdb truncate()
+16a7fced92d9fa00fcf63a6c00f450b756e3ed21: Fix for Issue:186 bdb truncate() test was failing.
+2a21f0722ec04fe26f2832f34abd3db4a012dd6e: Fixed potential race condition in setting state and creating redirectingSocketStores.
+7de50700c84920e301972ef1e414fdf8538c21d8: Changed RoutedStore to throw exceptions.
+059ac3b78edd3f913e512eefbb4d7ede0476633e: moved RebalanceTest to Junit4.
+25ddea3ffc1f2931b5a3e11bc0f33144d6330cd6: Merged in Alex changes for Async stop().
+2c25d84381f661833d9bbbb476fe155f253f39cd: refactor rebalancingClient.
+4316c3d93ab06b8f7515a404dbe17b9352550a44: Changed rebalancer API to only take one parameter.
+d9c194c0daf5f97316281c8bc60a46d89e9f35cd: rebalancing controller changes.
+a0e207d40acd5e822f17ebf3a9908779be310beb: Re-using SchedulerService in lieu of a separate ThreadPool in AsyncOperationRunner.
+e7061572b8f14ab35c245268f45a0be2697ad970: Changed Exception handling in RoutedStore.
+954e0d4c52575ea72afe65e47cff8847d387af5a: Added comments to the ThresholdFailureDetector.
+c28e8a9964ed9ecc5fb089ba35f85072474781ba: Code cleanup in Ec2RebalancingTest. Using a ThreadFactory in AsyncOperationRunner. TODO:       * test proxy get during rebalancing       * unify SchedulerService and AsyncOperationRunner
+93599319308d898a7030289d75d6e8fb21b09307: Support for stopping an async operation, listing async operations: Modified the wire protocol. Added client and server hooks. TODO: testing, documentation
+ac10d0191642b50c47355f978ddcadd78b6408b1: Modified waitForCompletion() to right shift by 1 instead of by 2. Added stopOperation(int requestId) call, exposed it via JMX.
+68dc7290b9dbfa99276730c575b4c8ca8cc3371e: Added ability to stop asynchronous requests.
+10e954bafb80adeca9d4ac102e0cede75942d2a0: Fixed up synchronization. I'd tried using ReadWriteLock but it slowed things down several orders of magnitude. I believe the code is correct, but perhaps not optimal in terms of locking.
+a48ac00617188a5ca4fae91f04d722c05fad0131: Added fetchEntries() performance fix to use fetchKeys() first and then call get() only for required keys.
+30797c02f076b3b14a1f376e7bf9ae02f530bbb4: Exposing more JMX calls, improved synchronization a little.
+c033ec9bf4ad343bcd0d64636276a0bb93c89957: Added more JMX calls and started work on implementing unit tests to verify. Specifically I'm using the technique listed at http://weblogs.java.net/blog/emcmanus/archive/2006/07/unit_testing_re.html to test JMX over a loopback network connection to ensure the plumbing is working (catch serialization problems, etc.)
+e620f77898bc836a3c93871285b19cbf81cec45c: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+69be411705af05fe4e0b542c87dca823b879c5a0: refactoring rebalanceClusterplan.
+047312afd3c7a85226b7ae2dac79765737061883: Rebalancing working w/o failures.
+ddbba4da458264f7bdcbae30443321ca86a283d1: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+befa4057462b69b42ad2ee1776faf32c91399ecc: Further work on rebalancing test skeleton, gossip ec2 test passing.
+a92cc179bd7e558b7234602072a7871bed29685d: Removed superfluous System.out debugging.
+153567e9fcdf065bc04dabbd9f06b196b3e17297: Changed requestRoutingType wire protocol to int.
+325ecc40e73c4d803ae0f22c5cbb00e9627f622f: Hmmmm can't get log4j to "take" on Hudson, forcing System.out.printlns for now :(
+21f8287e12013ca09bf2889afc9f8605dc3dd0ab: Added getAll(), getVersions() support to RedirectingStore.
+8c485336db74d7bc657dd6dfa8ab8333d02e747d: More debug to diagnose problem only seen on Hudson. Made some temporary changes to build.xml and log4j.properties that will need to be rolled back after the problem is found/fixed.
+0db649cea75b83e58c2f924d12df45870e91d358: Restructured method of determining availability as I was getting errors using a hard-coded key for the meta data store. Also added a new soon-to-be-EC2-enabled test for failure detection.
+b2bd6fce4a300e749b579a99f37bbf9a97573635: Added Voldemort V2.
+6337f574b9ceeecb44e746c3ac625251da3b81b3: Added unchecked get support for native V2.
+3957238849f69914f4c254d6a68339578f2d8ffa: refactored protobuf redirecting get.
+a527de1e5d596cb192a49defc795daf694fef34a: after code review refactoring.
+aa639cc503cd636d2d00c634d2f3425d86b4c83c: Fixed misleading comment.
+5ad8f8a69e87ef1b52969e743c69df73d03b68dc: ThresholdFailureDetector is now extending AsyncRecoveryFailureDetector to asynchronously check for recovered nodes. Unavailable nodes are no longer marked as available as soon as the current time window has elapsed.
+8c7ee59a4487284786a9f5a5d437bdb40a4bf3b1: Voldemort Issue #185: Add ability to truncate a store
+caebc54db970b68146908f769a71cde06a812bbb: Merge commit 'upstream/master' into availability
+a770de6db9f8e5d03267c1ed07ae5c6eddd9b488: Added more test for rebalancing functional testing.
+44f4a24c650ea2b805a699858115ed35e7ad9a48: Merge branch 'rebalancing' of git://github.com/afeinberg/voldemort into rebalancing
+9ece26ca6a638fa3e60f08197d2f3f481da6aae9: Merged trunk master.
+a7a33b41f1894614e79794dfc72edf8a3892550e: Merge branch 'master' of github.com:voldemort/voldemort into trunk-master
+73f32a47e4e5460e57cb26f8cfa1d2d1d21c77a4: Merge branch 'release-060'
+77b906f47aa8efc3b9dd3cbfe159785e87b68e3b: Additional work on ec2 testing to work for gossip.
+7ad2da5fb058f7929c3d86db8f5ca8e0b54b79dc: Fixed hardcoded timeouts.
+83ebbd6768b48f19dc8b77912a718cd7040de48a: Added more rebalancing tests.
+f68e3ba9b0c281a34d5ed93d994308cf126980d6: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+fcd3faaee76906704cb975de4bb398823994db23: added new rebalanceClientConfig.
+da5122f2c37069f045c8e466e3a3f4cbdffb301a: Rebalance unit test start passing.
+bfe1be7f707044f041beb0d9ed0e837edac2807e: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+d4fdede5396fb645dfea0166117409d5f00e72ab: Refactoring to work with the new AdminClient API.
+2925d6a14647a07890f831c4111571b00712b035: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+49ec7b202f98688b1e52fde179e0dfddc778a244: Fixed hanging mulltipleJVM test.
+e4a537d329f8e932750fc81385d5601a058d7895: Merge commit 'upstream/master' into availability
+62278e2ea8c7725bdb380d65fc0256eaf318a15f: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+9af5aafd3a4d4adf84441e31c299ffc112e8bd71: Fixed compilation issue.
+89ebfa0f0921d8b0d2d850ed6548455e423bc687: Fixed default for adminThrottling.
+53a4c422cca2b50909dd95071fc36b0746c7f776: Merge branch 'master' of github.com:voldemort/voldemort into trunk-master
+42f041942bd907a9243108948fa6995983895abf: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+56c56942f787c4e7509539ee9e0e009d82db7d44: Minor build fix for slightly unusual setups with protobuf deps.
+2e97c87148b75d23e6157052074de93480a8926c: Comments.
+ba08dfe6ad1df840389d3ac45d7660297722192f: Added support for serverside routing InvalidMetadataException.
+0548406c86c8ed3af48c0a59586f8dd03d3aefdd: Fixed inconsistent error message.
+a217403fecbbd540e7536cb30cc4626eaf1ab97d: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+db4c0faeac2318d65c9a5fe2863f17778faf05e1: Rebalancing tested for all failures modes locally.
+8b71156a1286bbf021c014bd3b0787485b6c2bc6: Added @Deprecated to the now-deprecated methods in the ClientConfig and VoldemortConfig classes.
+30f8fb6f0310c4f96fb2980c0551fb03817bddf1: Clean up of the ClientConfig, VoldemortConfig, and FailureDetectorConfig to expose the settings as configuration properties. Also renamed things a bit.
+1c3f6735245467ab7aa1be3fcfc5e5c0e4b158c1: Merge commit 'upstream/master' into availability
+421e36d30e9140a3695f76113e3c02256397a1b9: More clean up of the failure detector implementations and tests.
+12848450acfd63ac4f44131264c345a858289125: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+29a6e72b55c4498242deb84daf7a2b84b93086e5: Added rebalancerService as voldemort service.
+43aab10e96b90f2c9575af6047a7b8a18291fcbb: Clean up of the ThresholdFailureDetector update method to make it a lot cleaner.
+551a7087f48990968059e851d579e098c52c72fd: More clean up of FailureDetector implementations.
+f81b2367588748b0430b021a93b2fb867be71341: Clean up of the FailureDetector implementations to make things a little more obvious. A little more work on the way to make it a lot cleaner, hopefully...
+1a7b866669084123b38819ea73424c1859bb4373: Updates to harden the concurrency. Still need to make it simpler and clean up the synchronization.
+233e2d0dd3699fbfad285d2bfdbfc579786191bd: Disabled network loader by default in AdminClient.
+0843f7066471a81796a13cb3b69af4e29cfa5f27: Added support for fetching partition keys/value to the admin shell.
+2d9db220170fb1d4520e38f9b9688fd090ba7e23: Added a simple voldemort shell, supporting "getmetadata" and "fetch" for now.
+d4e8ace265de9349749c7bf837dc6bc1a13b5dc8: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+8f6996169270209f479d1d1458ea0f00ebfc8b1c: Added support for fetching partition keys/value to the admin shell.
+f085f188403b8083b0b05fbcf3d2b329bac2ace1: Rebalancing first version tested.
+fd6fc21d89c26c18a16c54b7ffbbfe4c2a6d50d8: Added a simple voldemort shell, supporting "getmetadata" and "fetch" for now.
+e54a06abca428dc57040373c2394604f451a8919: Further work on performance test for failure detection and various little issues that are found, mostly with inconsistencies among the implementations.
+0e18d2a0c74aef79abfc9c0e22275b41ec2653ef: Introduced the ThresholdFailureDetector that collects success/failure ratios for a given interval of time and determines availability based on a threshold.
+1ca753aa3fb2b012ab5676e4b2aea03d55ccb97b: Introduced the concept of a StoreResolver that allowed for cleaning up the FailureDetectorConfig to use a builder pattern instead of a bunch of different constructors.
+b6aff3414532cf77682b62c664b60dad8328b947: Using JMX properly. Inherited methods with JMX annotations will "take" but inherited class descriptions won't.
+97d3f70279da869411b1d6c6344d5fe8b164c891: Work on implementation-specific unit tests for FailureDetectors. Also reintroduced usage of Time to allow for easier unit testing.
+2319440fb18c74b6c3ae2c3bd71eeaec78a91307: Added cluster.xml revert propagation in rebalanceCommit.
+8942921a7a499d0d3d200fc1f345fbdcb25529be: Do not throw IOException from encode.
+03727a0a00159d3a3fc7c51cb5c070741115413b: Added commit or abort code to cluster changes.
+26a7c7a2aa168efdd0bfe2388b058fcc31bb6fbc: refactored rebalanceAtOneNode.
+faa7dc76ede4864e9aed9db545b4bac92d92c357: Remove unnecessary cast from byte to int.
+f96f18dd8e0dbb4ba432e4d362c5f066c2cc019f: Reformat files in compress.lzf to use the formatting standards used by Voldemort.
+e645a9fb19a57c56b96cb1ac4d44fac2525e330f: Change LzfCompressionStrategy to use LZFEncoder and LZFDecoder.
+bfa206a2f92753cab9d9dcd424e98e154247c5e4: Move LZF files to the right folder.
+0f6786eb938b86f4949e78af412969149361baf9: add wait for completion for aync operations.
+382807d5128f99779c91f0a0697774f8ad06e688: Rebalancing final code complete touches.
+6ac401ae38d8b138e8e55d8f528d8265d380904d: Lots of changes, particularly around getting a list of nodes to the FailureDetector. This is needed so that we can have a better idea about the make up of the cluster. Also added comments, cleaned some clutter up, and started work on FailureDetectorTest.
+aed321e8707feb7d8168e27560c8322027b6638f: Rebalancing code complete.
+883c030fa5d71b7c72c47a3df3088bd119a1cb82: Rebalancing client code complete 1.
+b166e2c16c706c8efeef000f55def76bc46a1b6b: Merge branch 'rebalancing' of git://github.com/afeinberg/voldemort into rebalancing
+dd36379874d9cff4a9fa7e1ab60198230b35367c: Adding store name to the initiate rebalance request message.
+61293023f2fb158f893eaffa1fa3e03027c161ab: Refactored AsyncOperationRunner method name.
+4e5653a4c1f0edb4114c33bd5edca8ea7a49c88e: Formatting changes.
+8396a58e8dc5f0fc7daf19167822feea6344bb02: Sharing a thread pool between SchedulerService and GossipService. Disabling gossip by default for time being.
+34d0c0d8a2185c0bca43e02e5c6bd9bad275bf5a: Fix max sequence length constant to reflect the maximum value storable in 30 bits.
+310912e5d8f276790a5a265b262d3bf2e65bf0bf: Add a hack to support lists and strings longer than Short.MAX_VALUE in the json serializer.
+c00a4639b8bd878ff2fb507fd6c5139fdb8201a1: Remove unused file.
+3c3efa63ee5ce8a7b998a809015e410d140bc439: Add interpolation search for read-only stores.
+7589a232af3b176fcfe60397c7dd5baed3f8ace4: Remove fs file store until further improvements are made.
+9a345dca960d087fb8a547e05843f1dbea6ca6d0: Add the target store to the view interface.
+f313532b52659f487983e1114606293c73883ab0: Pull changes from master.
+81f080c3ae88e59c9b12be4f3225a1000af68629: Extended the admin protocol to support rebalanceNode request.
+cf994ec1f125102b8e590f9bc35650d6ba25de4a: Fixed the test issue where marking a node as failed would come back online too fast (in the case of the asynchronous implementation). Introduced a means in the tests to make the AsyncRecovery implementation fail. Also added a "waitFor" method to allow the caller to block waiting for the node to become available (mostly used for testing at this point).
+07b11458b509780b0191c2697f7592e631d9eb00: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+cf77019478cc71624f1b246bcaf497d887dce01b: Added support for VoldemortServer start in Rebalancing mode.
+429ee6ea94939a8d4b66d6d22366da4f020c262b: Added the JmxManaged annotation, gossip service is now through VoldemortConfig.
+2c95ca18fdebe9935ebf9b76ae6b6ea2f71b0ff0: Cleaned up code/improved documentation for the gossiper.
+d1f50ea900d5217c09d3379909ad50dca592b05f: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+7bbd8d52e340dd5545a196b52f650fa47e7b1ab9: rebalancing client changes.
+a4ba2112c38bb7c280a5d7b78b9ff60ffd9561ea: Created a test for gossip protocol. Made gossip protocol work correctly.
+ed5b6217c2068ac2db2ffe04b2101dbcf20f3905: Fix for views. Views on keys make no sense.
+1609fe4877201c0dc110febed410b089ae4ba334: changes for rebalancing.
+8c3a051e99a2d5df5bffa24c3622017203297127: First pass at adding views.
+68e602b5ee0887540cd62db3b42f98aba47ea3c2: Removed @Override on an interface for 1.5 compatibility.
+8516f43b7020e427a2081ec12d01daeee458d108: Fixed compilation errors introduced by bad merge
+2ffaa160951c38b5aea415e25bc65f91df818cd7: Initial implementation of the gossip protocol. Pending testing and documentation.
+440665755931e91fa34735db34330d27512553d0: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+86ea8933acb492e0db8d02bc15e4ee3f7d5aff9f: Added Gossip_keys set to metadatastore.
+d2b16baab08765ad06fee834f9488e0142b71641: Created a skeleton for the gossip protocol.
+1cdbe4c5d7227f0dbeafa3acb191b2302d843bd9: Merge remote branch 'upstream/master' into availability
+caed939ff41b0735d338348f819f22a74ebdad04: AdminServiceRequestHandler fetchKeys() refactored to use keys().
+8b45556ea2241af7adc417bbece06f59eca5abbd: moved iterator.close() inside finally.
+fa117a2d86b9503840880198694b37145fc86048: Remove usless assignment.
+18ebe18c644b187bdcc5934e74d01f9fcded577b: Fix two infinte loops. One in get and another in put.
+bdef7f994a7eba678ece07397f8fe9ffc65499e9: Fix Issue 122: Suspicious integer division in RequestCounter.getThroughput.
+de707896799f076cdcdeb243d6050edb1edd38fd: Remove a couple of unnecessary @SuppressWarnings("unchecked").
+b62b8813badad739eebe2c04c7fb949ea6ca1b05: Organize imports (removing unused ones).
+ddba82a3fec80ea248cb28b8a7ffee58cdaec267: Fix various raw type warnings.
+12a72ae97d065c089ff6d7ba388124d57d6e63c6: Pulled missing AdminService changes.
+edb84f614b08ceebe4bce963859dadd299505961: pull from voldemort master.
+fa17e7584abf72128340ee4a7cf62dff84cc4f36: Fixed metadataStore to throw ObsoleteVersionException.
+5ea0bc3395aeb42429d29f4e50d9eaaa302947ac: Changed ConfigurationStore to save temp keys inside .temp directory.
+f678066983687be3558083a6342bd1254081eb83: Fixed bad log in bootstrap retry logic.
+6dd690ba3d0c010805aa6ed92a01f7e89178ef44: Implementation and tests for Issue 172: Support LZF compression.
+27a3435cea0b09e2bb4d9680352c2bb1a7f43c92: Extract StreamCompressionStrategy from GzipCompressionStrategy.
+61b01fa729a244d05ba48afb0277e6f1c17727e3: fixed compilation issues after merge.
+a533635dbcc07e611bd336686574ea567170f4e1: Made AsyncOperationRunner an AbstractService.
+b7f90e5680ec53b0af5d266fc4698d7a7be28ab3: Parametrizing exponential delay, for now using static constants.
+75f3477ce9732a8c7a71852b82623f90ffbdaefa: Improve obsolete version exception message.
+269930196e6d9b240b9e6f0e46d23989de95cd3b: Improve type error in json serializer.
+81582c44ac2d655d0ba3bf057e1f0ad1a4519411: Add fs store--a file-per-value storage engine.
+e9c6cb3f9e06929da48e7dff27a8dc6318f80fdf: Read-only store: (1) Use a single memory mapping and use duplicate() call to handle concurrency. This eliminates the need to pool memory mappings. (2) Add JMX monitoring for push process progress
+699f62b7d0572060df3c5e7017e1a9a87f41df81: Merge branch 'master' of github.com:voldemort/voldemort
+f5ade7aab459693ea7e2b61533e7d27e00abdbc4: Alex jmx fix.
+33c57462ea789461ebb8614aee451ebf760c27b6: Added a JMX operation for viewing all requests in the map.
+61b0abec635e330cc2b27812d49c71094ecf0fdb: Added JMX support for some of the async functionality.
+e420db390f65229f13a273defe07ec972fb3c4a3: Incorporated a patch by Benjamin Schmaus<benjamin.schmaus@gmail.com>: changes to command line shell client (adding support for reading commands from a text file, changing "locate" to "preflist").
+43c14203fcc79a27b91df8c3b94406b774fcc494: Using volatile for members of AsyncOperationStatus, minimizing the use of locks.
+3331ad851bad8155eb13beaad587639173d72f39: changed waitForCompletion() to throw error if failed to finish in given time.
+32ae2b838c84b5353d1aeafcf16275c733383ecf: Fixing a potential NPE in AsyncOperationStatus.
+df8245286b29ea7a5807e699e7935a9dc048a086: Merge branch 'rebalancing' of github.com:bbansal/voldemort
+1b4c57abe7a681eb7c8fdeabcc39ccc52863f536: Tweak fix for issue #170, throw the exception instead of returning it and ignore InterruptedException.
+4dbdf782586262d4804bf9100c07850e9bb8b335: Introduce BdbIterator and refactor BdbStoreIterator and BdbKeysIterator to use it.
+31d2adb683915465b0b348e2123cf445224df899: Make sure to rethrow exception after adding it to startedStatusQueue.
+f2a023928b0fa55cec91fa2d3ccd53071550e526: Fix and test for Issue 170: Hang if port is being used by another process.
+d9651fcea0135d0e985004f84d231c6e4d79cb6b: Strictly checking for size == -1, passing Multi JVM test now: was failing due to a protocol buffers bug.
+d88e17c493197d472907dede09d324ed7a372b4e: Removed AdminSocketRequestHandlerFactory.
+341beb25573de0c9bfddc16aeee44930cb1c3970: Added error logging to server side.
+3ae9933e7e71a58a602fd02c1cbfd21682808cb2: Merge branch 'rebalancing' of git://github.com/afeinberg/voldemort into rebalancing
+cffd8d763216d079250efc74b253074a5bea3dbc: Added a MultiJVM AdminTest.
+46ab6674a7f12a92cda027d8bb05c93404e6b404: Refactoring: using AsyncOperationStatus class, s/request/operation/ in variable and method names.
+0d659eb722b1b23037b03ca28ecffd4c01838cb1: Made AsyncOperationRunner and associated state (e.g. last request id) global via VoldemortServer.
+2fd35f9889875dc1f8ebc6501ed7682dfee1c131: small changes in Admin Async request handler.
+ab97723dc2045d3b4267838df239fae843770bd0: refactored code to use ClientConfig in  AdminClient() constructor.
+320c4118da731d4f1af1e2718edf0bb71006eb04: Refactored AdminClient to bootstrap and not use metadataStore.
+4a918dd114b68dd53a0b00e4e1d65e9e1452a32b: Implement Issue 168: Introduce StorageEngine.keys().
+1f412ce8897f2ba00d98b3f4524aaab5b92f29c3: Added documentation to waitForCompletion()
+56b73744bed4bea947b1af280277f2a7e904a9c4: Added waitForCompletion(), immediately returning from fetchAndUpdateStreams()
+ad00bb1d6edb5bc6193f545ee1c37f5764d3fbd6: Using the AsyncOperationStatus object now.
+0b553197ecf681e4551db8dea924ed0e58b2f81d: Created an operation status object, refactored request id to be an integer rather than a string. Changed protocol buffers messages to match the new schema for requests and request ids.
+91f39487fe21fbbb9cca97c2176647f1005519cb: Revert "Adding a new status object to AsyncOperation, changing the Scheduler type."
+92281e32715e29a1bd2741132c3418e6db0e08b3: Adding a new status object to AsyncOperation, changing the Scheduler type.
+3b0211929c0c8be13cbf325e7aed303aaf916e1a: Merge branch 'rebalancing' of git://github.com/afeinberg/voldemort into rebalancing
+090985acb67d744737b2d632a06af132a8239edb: Simplified AsyncOperationRequestRunner, added a unit test for AsyncOperationRepository.
+bbafb4387f40886e6eab995f391c3c20a8de9b8d: Moved InvalidMetadataStore to store.invalidmetadata package.
+00c503dd52c8175da21ff88a308d31b33646429c: Moved InvalidMetadataStore to store.invalidmetadata package.
+969bc6b4559c617126f031499871dd09311c86c7: Merge remote branch 'alex/rebalancing' into rebalancing
+ea59245e2fc91a4303190a0153ffa8cd118d507f: Added comment for delete() in redirectingStore.
+ca84cb555e93eb8baa3e57265fb4a5cb3a0a0531: redirectStore changed to use NodeStore.
+04f5252845d41f86e2a828b0e92dfba85f94d39c: Now using scanUntilRemovable flag and only removing completed entries from the LRUMap. Renamed AsyncRequest to AsyncOperation to avoid confusion, moved from client to server.
+8dab7e205d3e61e4811f4b771916f2db275ba908: Created initial support for asynchronous requests. Implemented fetchAndUpdate using this support. TODO: revisit LRU implementation (do not purge requests that are not complete), throughouly test AsyncRequestRunner.
+1e8595f49dd971e5e27e021b3df963c700adbf37: Further skeleton implementation.
+95aab9fdb6ddeb845f5fcf86417d919cb3d19c0e: Merge branch 'ec2-testing' of git://github.com/kirktrue/voldemort into rebalancing
+0ec3dd20ad6c88fb9cfc969553c11fa196523849: Improved the skeleton for fetch and update.
+370e9e53cf3bc8dbdcff01c4ce810f78e1295e6d: refactoring in ProtoBuffAdminServiceRequestHandler.
+51284f24a7649a022e8e2c3b2475d16e471f9f1f: Merge branch 'rebalancing' of git://github.com/afeinberg/voldemort into rebalancing
+c79f0e321dca8caeeb5724b6e46865ea5165ae4f: Adding skeleton message for initiating fetch and update, removing redirect get/fetch keys traces from the protocol.
+eb46654e53ab8007250a503bda6d561e335ebdf7: Deleted AdminServiceRequestHandler.
+470f60ecfbc13f49b1979dc72a31084bfb185f7f: Merge branch 'rebalancing' of git://github.com/afeinberg/voldemort into rebalancing
+02829a2cac8998d0698d50ea7fce48ce3ef64d11: Improved MetadataTest.
+afae7fb3f4cbbfedd3732786c75f4a52c7381df9: Merge branch 'rebalancing' of git://github.com/bbansal/voldemort into rebalancing
+b46736178349cddaab6500400b7f204b8753f834: Refactored some boiler plate code out of the protocol buffers related streaming functions (fetchPartitionKeys, fetchPartitionEntries).
+935e7ac7409b5e1e6d55f72de0b6a1da1c420ff6: Bunch of refactoring and deleted server side of NativeAdmin.
+d755a0bd475f86797d34633c9049858378dc59e8: Boiler plate removal part I: use a single message (with optional parameters) for both fetchPartitionKeys and fetchPartitionEntries (handler implementation can change when/if "retrieve keys only" functionality is added to BDB JE).
+788a0b44cbf1b91f85b2bef3aa3c3b30cf329029: removed NativeAdmin Client.
+0cf769e8a21f44943b7f88c46f9b9274c1ad27a6: Removed NativeAdminClient.
+4e4efde943fea822f5c7650abec78cba5a3be63d: Merge commit 'upstream/master' into ec2-testing
+0c46ae798b751cf426ef0abeecdb9d59db5e1b19: More refactoring out of the boiler plate code.
+d26818ade098c26cdc301fd322d717a46c36ecb9: Refactoring out some of the boiler plate code in admin client (in dealing with protocol buffers).
+52fc2ca3d9bd92b484b48d70197fc47c530c810e: Merge remote branch 'bbansal/rebalancing' into rebalancing
+393f62458541399d9cc8b5e65ad39cabfeee5221: Fixed NPE in metadatastore.
+9b1560027c72ff11d645b097531133795694e33b: Merge remote branch 'bbansal/rebalancing' into rebalancing
+f0e35dcca570a54ad463ca13008c321c5780fcb6: Refactored AdminAPI.
+b9a57b9b887c1618603fd3ec0c2278311c436e9f: Change bdb.max.logfile.size from 1GB to 60MB.
+d93b8da5665627c184d667a670ffeeb1dc16d576: Change bdb.max.logfile.size from 1GB to 60MB.
+788aa246bf20ad4a2995be559948c65e009f898c: Merged with trunk.
+4aab0772f724b06ac44858c6ae66d58c00aff4b5: Fixed unwanted checkin in DefaultStoreClient.
+a0b1171b72c791219425aeced879d721a6a6ccf7: Merge commit 'alex/rebalancing' into rebalancing
+ea4b3b8ebc6f20d49f4468b132eb96d63e02ff6e: Refactored few constants names.
+c4a4a0a48e9a5d3ce4d5796c8ce27a503f62bcb9: Merge commit 'upstream/master' into ec2-testing
+b2daa523a27ec0e977cc1e9ee81e971909852ba0: Merge branch 'master' of git://github.com/voldemort/voldemort
+47ff45632de87ac091c5ebfa892efe4ec9fd4a79: Make delete asynchronous.
+ebfba930eabc39fa2aeaa678b054a2a4f8ae8442: Fix Issue 163: Incorrect lock mode used during get by BdbStorageEngine
+e73d8d52ed7ade2a293adb46a71f8579e65a62c9: Fixed issue in readOnlyEngine close()
+ba5c64008df4a56b81e9ad4567c0a02faa7eb8e1: Fixed hidden logging in StorageService.
+6efd34a180d79d3a93694e8ace2b53eaa400271c: Refactored fetchKeys -> fetchPartitionKeys to be consistent with fetchPartitionEntries.
+97f8adf98395abee0de8f9e40da6f13abb0d0615: Merge commit 'upstream/master' into ec2-testing
+9ff303804d03d936f0ee4614d13a02e07f053251: Added debug logs for bdb stats.
+0b25d0ed38894a40a4a50a10712002fd00931641: Fixed issue in bdb  environmentStats.
+79f67a067f3e2f85b778bf93f7aadb69911140f5: Changed default maxBootstrapRetries as 1.
+2ba0a1c3b273c6716f8637848b457f1b3bb8357a: Merge remote branch 'upstream/master' into ec2-testing
+7af0efda7cd17efb32aee36066c933fd001d02a0: Added an option for enabling/disabling disk-order preloading (via configuration setting): need to evaluate performance impact on different datasets.
+ef659b94822749575427b81e949dd58095998d67: Many updates; added shell scripts, reorganized code again, and parallelized the execution for multiple servers.
+34ad97a89dcd248d8907f8c1c28f38f0e16b8f11: Added BdbStats.
+0f302e2ef5a65aca9b5ed75d5f1e4b77aecd8930: Added backoff and retry logic in bootStrap code.
+8667c2e1dc722ed8542af86854c03a99ef658f41: Merge branch 'master' of git@github.com:voldemort/voldemort
+5e36e0d12b728255d9d8fdf455b0c1423c150d1c: Added BdbStats.
+8817172639d98de290ebbe1b55059158368e1538: Added backoff and retry logic in bootStrap code.
+c8cc348a3669de5f6b01e886c6cf0768daff286d: Any ObsoleteVersionException(s) encountered should be included when InsufficientOperationalNodesException is thrown (caught by ijuma).
+bf682642228aa3171447ecb38a9c06ab51dd72ca: Any ObsoleteVersionException(s) encountered should be included when InsufficientOperationalNodesException is thrown (caught by ijuma).
+4bd77deb9d8de0dcd463cd442b5dd8f706f6f742: Initial fetchKeys() support.
+33d01196bced9bd1e01e4f9bdf70605c5eb08225: Merge remote branch 'upstream/master' into availability
+1a8d5edc3eb3cb02f6a51edd2f397bace5229605: No longer logging obsoleteVersionException or logging it as a failure.
+5c9ba77b7474b98e570ba08aa438fbc37501301e: Re-throwing the exception again not to break the client, will require separate commit to no longer log the obsoleteVersionException.
+cbf86c8ba3c0a40833d46bd5c847b2de54b1abbe: Handling obsoleteVersionException separately in JMX; no longer re-throwing obsoleteVersionException.
+c6508d60fe7ab7e8c8b6ae55629d396c55d44770: No longer logging obsoleteVersionException or logging it as a failure.
+e54fad52c4ae1faba2ca75e2e7d0a5aacb846921: Re-throwing the exception again not to break the client, will require separate commit to no longer log the obsoleteVersionException.
+3c3d49d60f508533ca03dfde770c1ba9513494de: Handling obsoleteVersionException separately in JMX; no longer re-throwing obsoleteVersionException.
+da62f466781a9c2e10a62edf18dab3578f65069f: Fix for Issue 159:   Exception from new socket pool
+08d5f745719345a70afa1e3afe85b691bd3e5b20: Adding support for fetchKeys for rebalancing.
+c3ef94affa3539a0569cbf04a6073cd639e0866b: Fix for Issue 159:   Exception from new socket pool
+15b5cc1bd943af19201fea9625a642d18500ee99: Merge commit 'upstream/master' into availability
+864d6a518fd6b6cc3ac129d9abb5f34b7d37e827: Integrating a patch from Daniel C <daniel_76@yahoo.com>, fixes issue 161: StoreClient#getValue(key,defaultValue) fixed to return a defaultValue instead of null if get(key) is null).
+86d8a7b6850ef46c446370e3f1b0ac85256a5257: Experimenting with preloading the BDB cursor in disk (as opposed to key) order, created a performance test for the admin server/client.
+5daf42c14f59723472d1b16f81bc04970561aa8c: Remove requiresValue method as we don't need it for now.
+39f633b3d0ea73844cc23ea76beb3b3c8e7c5e51: Rely only on the number of versions returned to decide whether we need to retrieve the value for put(K, V).
+40498f3096cd0ec017f59927599439c6ccbba019: Do not override getVersions.
+607c3cc823185e6d5b9d885921b98a897a5e0f50: Implement Issue 152: getVersion() API in Store.
+28e7c78cfd8b763c4f64ea947529eaece69e3930: refactored metadataStore for simplicity.
+0bd1e96daf2ba02e361b8aa2a2280f2001ec6983: Merge remote branch 'bbansal/rebalancing' into rebalancing-fixed
+c5e1e4e6accfb8a0b8934f5dd31a02e51e149048: Merged Alex latest changes.
+d18f0ce071c402ae09eb2b282331977194614e43: Merge commit 'upstream/master' into availability
+29caea47bde372729274da56a091379c2756553f: Fixed NPE at client connection due to missing metdataStore routingStrategy
+0c0ad0bda2fbab865f70f3d01ac41d2fddb654ee: Minor formatting change.
+e09f9ea566594b151ffb6c2a885e2af60fe00c35: Changed key names and fixed rollbackFromBackup for ConfigurationStorageEngine.
+cbe821389d15338ce72eacc4df2e06531a10ff24: Added filter support to update request. Made filter unit tests work with the protobuf admin service. Refactoring: moved encoding a filter into a separate function.
+8bd298a1407feb662d8804b284e9c24b614ef76d: Fixed compilation issues after refactoring requestFormatFactory.
+75648a2d5a6c21d42c5a31811a88de8a0e41454a: Changed admin clients to use AdminSocketPort().
+2965b5063608b87387036526d6f335c6416da194: Split RequestHandlerFactory into SocketRequestHandlerFactory and AdminRequestHandlerFactory to avoid accidental usage.
+68146711094a1da5717857f181784926c1e6b9a6: Merging alex rebalancing to rebalancing.
+c5a777633cc1b509e48302536611a9259911aae9: More formatting changes: added LI copyrights.
+9bfaa4943c4decb2c8ca640f870b31a7ddc7480d: Code cleanup: no longer doing writeInt(-1) by hand, moved Admin protobuff implementations to the admin client/server packages.
+36f6daa5f4737841c5f5733ff7ca479b2ca24b74: Added new AdminSocketServer.
+48f275c71ec589e5e2186be8c015023e0343d8fc: Cleanup: removed dead code and unused imports. Made indentation consistent.
+8d53717f82c15457ce622a603444baaedf5aaf33: There's a bug with CodedInputStream. With Ismail's help I was able to work around it. All unit tests are now passing. Using buffered streams to create an optimal sized "window".
+92428c20df839daaa200bcf550c87f64be47b73d: Using a much simpler protocol, relying on buffering provided by Java vs. doing buffering by hand.
+2fd83d714a28d52c0e037b578e73ed973e7ea45d: Attempting to just use buffering provided by DataInputStream/DataOuputStream vs. buffer things myself.
+b74f656744ee638544780d49d4e759c12ad89de5: Half working branch.
+b20e97b0c3a3f36151c59ba0423c16d00a5cde48: Upped build.version to 0.55
+ac438d3b459e0d1e9b31693bdcf01658e12d92a2: Added a unit test for fetch. Fixed fetch. Working on update. Renamed buffer -> window.
+750a0c13c386633eead4465074ef92532f969680: Fetch and update: protobuffs working, but streaming isn't fully functional and code is not elegant.
+11db5f72401ba31b6348e56124f6b560074c6af0: Removed extra try call from DataCleanUp.
+fd3466a737b051558b52ec5aa22b7629ef9345af: Generalized IoThrottler to EventThrottler.
+9e0ba425e280f3e9cdc0e7850bd45f4047faf97c: Fixed BdbIterator to swallow DataBaseException.
+51a3dc61d024a5638e65af941e3e91924e43f08b: Addded server.properties to override retention start-time and period.
+bfd86e8fe3cec85052568c95ffac77837abb2f56: Chaned xsd attribute retention-throttle-rate retention-scan-throttle-rate.
+a2efe16a8ae1a763227be0b7d4d8d89ce31eac1a: Fixed throttler for DataCleanupJob.
+445ac5237cdf08ba829328f868cd368dfbec25d6: Untested implementation of server side handling for streaming fetch and update partition entries. Tweaked the protobuff file for this.
+bc95192b957f264d51f075ef42d5bdffd8583fff: throttle support is buggy taking it out from DataCleanupJob.
+fdb17d63e8536effb00bcae0f65a653ac7bebc0d: Fixed bad merge for DataCleanupJob.
+90526e417da4f9bb05300162f8f69a68f9976e48: Added commit to fix DataCleanupJob and new JMX forceCleanupCall.
+07951ecdb0263ced2bfd78d1868e6beb92fb3222: Added more of a skeleton for the streaming/fetch partition entries portion of the Protobuf admin API.
+700bb560c0e75cdd23411eff56772f3c1aa92efc: Added redirect get request, added comments to the protobuf file.
+fdb763861c534937d13611842307aefebe585608: Implemented deletePartitionEntries and the test for it (extending the protocol buffer file as needed).
+71acbce579768edda2d075ccfbb711a1d17244c4: Initial import of the protocol buffers based admin protocol.
+7fce69001098dafcb044720e07a5e9157930407c: fixed NPE in voldemort server start.
+1fc80678ec0092cb7bf1936d2f3c726c442283ea: Fix timeout error message to use correct units (ms).
+943cfcf47a6aeecf1bc63bb39be47857ef7513d9: Now using voldemort.utils.Time API and JUnit 4's @RunAs(Parameterized.class) to test multiple implementations of the FailureDetector.
+c9bec07b51e928efac16d4f5db21875c07c51dba: Merge remote branch 'bbansal/rebalancing' into rebalancing
+efcdd2626dd0c81cbd5d71e6ff5322b463b68fb3: Fix Issue 88: commons pool max_total_connections is a bad idea.
+386a9f7a4e922cffd7e85af30659252ba19d2239: Added throttle rate to the retention process using IoThrottler
+810aa20479093dc30e74c74315f3f771e8b1aa61: Fix compiler warnings from generated file VProto.java.
+5cd3c08b1b4e4dc773d39d803c0bfc0ab204098e: Implement Issue 155: Upgrade to protobuf 2.2.0.
+96e1e5ec8b7d4ea6c5a1da9cee3d878d3ea8b47b: Fix getAll part of Issue 150, fix issue where read repair was not invoked for getAll and cleanups.
+134bc834e0f32ef9e5a8776e49404ceaec6c0d30: Add not null checks in constructor for key and value.
+f303007985f2e12e618bc9a99b17b82be77208a2: Merge commit '414bbde7b0e4f8817aeb7cb36ab98d97b4db2e68'
+812604c8e88a405295a319e11d96f1f4cee6be43: Fix Issue 154: Expose je.cleaner.minFileUtilization and je.cleaner.minUtilization.
+6f36a5acede6b0256695efbb06b4487b220f9577: Started work on listeners that can be used to do things like clear out a particular node's sockets when the failure detector has determined that a node is down.
+f318a72df95c213357b966fccb09b9f4bd64fd6f: Unit test added for AdminServer Filter Api.
+72bccfbfbfa11f5570cbabef96a2e659e4240cff: Added a NetworkClassLoader to provide Server side support of dynamic UDF's.
+4fc16f475e290d02e507ce74de07c6b949d429a7: commiting bunch of changes together to get a clean slate.
+e3978b1fd3820980f27dc4527423b5c488a7071c: Added test for MetadataStore.
+49fc8944d321762e565bfe776278b14d1089b51b: ConfigurationStorageEngine meant for keeping metadata fixed.
+414bbde7b0e4f8817aeb7cb36ab98d97b4db2e68: hashCode crashes if Versioned value is null
+eea1284b16f561db93eec4f45609181acbacabe6: Decide the need of repairReads based on nodeValues that is actually collected to keep track of items needing repair
+0e5db0bd8c4b33a2dd78333cc874868e12eb4d4d: Yet more tweaks.
+a68b38831ccc0c7b46b26dc6b41417400e05e0c7: Still more re-org, comments, etc.
+b2b73770b995c92e99eff8a46b55030a7ffc2aac: Class renaming, comments, etc.
+8df38de260d41ecf11c0fd146ac714042b0db7e4: More comments/cleanup.
+04f37c4dc38e1d174adb8eb95f2e73deecbe5709: Comments/cleanup.
+b216b7be761c6c1bfdd6e51c57a80ac60b020745: Added comments.
+e5bdbcc6ded87d4a54b304d7408e91b7d3f9efa9: Renaming of packages, class names, etc.
+ae66636cb48501fa000aed0c109756dc5aef9771: List.size() == 0 changed to isEmpty
+781d1788014327d1788e0ab23263875e7f192ada: Potentia fix for Issue 150:  Missing keys are not added to node when performing
+06eeb9dd9c2bed234eec5453d640b8e56803abc4: Clean up NodeAvailabilityDetectors creation with utility methods.
+991acd37ebd5acbe7833b617f65e12ee404dce24: Further prototyping work. Lots of bugs, bad design decisions, long names, and no comments :(
+571fa14f5846f1d1188f05ff69d870f7f244ec41: changes in metadataStore to use a write-through-cache.
+9c8e0119ba0e0114b0f2dd114e0e7337690df2f6: Merged rebalancing branch with voldemort trunk.
+2341efed1a6994b3db8fa3c726a2aac72f96f1f9: Minor tweaks to availability rough draft.
+31dd93c6bfc33e3e5881b826a3ab108684caea81: Node availability detector changes based on Jay's input regarding where the NodeAvailabilityDetector objects should live and be created.
+198c5ed28bf6999fc0178aa06203e9df66cc9a86: Availability: updated method name and added utility class for NodeAvailabilityDetector.
+e17cce4b3ef3c0a34246761c416e97c1ddac0e56: First pass at NodeAvailabilityDetector.
+8a1a06832d9a57560c141fe15257bdfc9c58dc81: Merge branch 'master' of git@github.com:voldemort/voldemort
+22d9f921d73e5757234a1d9118756eae4756f026: Close GZIPInputStream before returning from inflate.
+ed6937d94d25b0c83f79fbba63e0d1cd59552491: Add javadoc to classes added for data compression support.
+fa8bee39e3d7e802bb37e882c53114efa6782c24: Issue 135: Add support for data compression.
+156c6039240ef65b3400022efe269bb749a2b53e: Test and fix for Issue 134: RoutedStore put() doesn't wait for enough attempts to succeed
+c687213d84b44ddd6d12caad31804d00f33642b6: Change failures in method put to be a List instead of Map.
+18236fed4fcbf5544d5fcfda57717504a1ff8493: Merge branch 'master' of git@github.com:ijuma/voldemort
+3f9cb465ff523237fc805221272a03fad4c97d21: Merge commit 'origin/socketpool'
+8a9d44b2fcea4a3511d6e8cba61d4bc134232ccf: Treat empty class name as null for readonly storage configuration.
+5e11abea7c08fd4556c08122e384ad19e9380c01: Catch any JMX exceptions. Attempt to make JMX names unique. This allows multiple factories in the same JVM.
+5a00311059cde655b6ff7f1408c08f716490f5de: Added implementation of isCompleteRequest and tested with unit tests.
+61427616d9080622d246b06cea7b74d5f2aad645: Added comments and exception handling clean up for isCompleteRequest.
+551e4342cf14a4f48a01f16dc1f84185b52aeac1: Added comments.
+a224577576b60a29150be67497014ee66b95e55a: Using ConcurrentLinkedQueue as suggested by Ismael.
+38eb71989201803b0035ed42264f7d506fabe9a7: Fixed error where negative byte values were read causing the DataInputStream to throw an EOFException.
+927373bab872cba5fb6aad86fb13022412d48b06: Factory should not be synchronized.
+d9d400bf1d00f9a652f81b42a990a4b9eab622c5: Suppress warning.
+d42f3e79616be6276afd6a3a41c6cd2d75b16ecf: Convert nio server to use LinkedBlockingQueue instead of LinkedBlockingDeque to retain 1.5 compatibility.
+72a09c02c33022a234a699319dfc4a94d07d0d85: Merge branch 'nio-server' of git://github.com/kirktrue/voldemort
+a755b4e13f0da769eee6f1cd13962ee504679025: Make read only store management servlet methods public.
+d1fe06e26e3e435a6fae00c763f79ad15129a559: Remove hard client dependency on protocol buffers.
+ac698071087191e2bd8ce24df4223f22f1e0e243: JMX errors should be non-fatal.
+61b11037cf0a95b5b54036d145f3e3f38608bbbc: Add default constructor for read only management servlet.
+2ab08f6048a65e618a5a041ebf747cbb5a9756e5: Fix compilation problem for java 1.5.
+6053a74aa4764a36ffd66cd30907b42d26e809eb: Do not use varint for size of message in protocol buffers request format type.
+2c3c94421e83e7d60a872ed795603ef7d4c39683: More tests for resource pool.
+4301934c596c27b64be4af9f5ac762bc24f577eb: Stop using commons pool for the connection pool.
+99fa79ab45e5d24ef749d8da42bce67a7dec6fc9: Merge branch 'master' of git://github.com/voldemort/voldemort into nio-server
+892758d04a38ea4091ab448614138e39ed6fa007: Merge commit 'bhup/socket-pool' into socketpool
+09d6d268ed9dc6dac7ab5f6465bed0ae7aefd06b: Fix issue #90: Simplify RoutedStore.get and remove usage of synchronized collections.
+f2325375435dac6a9f5634cd8cf97d325bb6725e: Fix RoutedStore.getAll to pass Throwable subclasses that are not Error subclasses to InsufficientOperationalNodesException.
+776ec8cfa6f3d03cfcc61d93ed6890538a7073c8: Implement github issue #30: Use protocol buffers API to improve the efficiency of the network protocol.
+6cf307ab1fc62e3dcad36147238107a47024ada0: Added a Unit test fwk for socket-pool tests.
+abe83aa8dc05113ac3fac79b52901cee174aba79: Remove reference to zip file.
+b440a87f36a292525d3282ec27cb61e2e1cf9751: Added a check on numTries in borrowResource() for avoiding spin-lock.
+71d497b3155942cae4e47faedb195f40ce34235d: Replace resourcesQueueMap and resourceQueueMap and resourceSizeMap with resourcesMap.
+740ec83a6f2c737ffe417ddcb776f0309c0c4738: Remove Object suffix from all the methods in PoolableObjectFactory and fix bug in create method signature.
+e41e6bc07cf6d9c839815adee2b8251442e47ebf: Added a naive implementaion of resource-pool.
+aae014342ac92633965a7b81eed406664b8dfa87: Fix github issue #21: Vector clock inconsistency resolver incorrect.
+060fa29b8a08d964c1d526c7b077696c1664c3c5: Use Math.max to simplify code slightly.
+5f1f54ffa4e068e5cd2df31c1b969d4f46fbd64a: Fix and test for github issue #25: Incorrect coersion of version to short before passing to ClockEntry constructor.
+6b5aeb7242a8ae814b18a5b13455e6c751c745a0: Fix github issue #27: ArrayIndexOutOfBoundsException in src/java/voldemort/routing/ConsistentRoutingStrategy.java
+adeef976bc37a2ac047f35e51eed72e0bd3bef7c: Merge branch 'master' of git@github.com:voldemort/voldemort
+3f7d24c929567c8eca356afd09e7a19d88de2c3e: General clean up, comments, documentation.
+99d13e9ada6da662d2149c49f933e3791b6413e2: Re-added changes that got "lost" in the merge :(
+3a9164e7c163df80502a36a66c415cde830f0a1e: Fixed non-complaining merge.
+0de3d054a796123dbefe8bc4ee91188a849cafc2: Merge branch 'master' of git://github.com/voldemort/voldemort into nio-server
+948644d77b8988f39184cd86456ab087a4652c4b: Merge branch 'master' of git://github.com/lindner/voldemort
+669001f0fa6b1f600778da62c14e36a412761bd1: Refactored method name validate() to createValidType().
+26a66ee76a6b051d292316b6963de8196b7d319b: Fixed JsonTypeDefinition to sort keyNames in Json MAP type.
+4d3a19499cfd747e1446d2f1d8059d305cddb863: Fixed JsonTypeDefintion to create complex Map type after sorting keyNames.
+43f74dbaf91cb85802e29ac06e7c37ec5964c611: Storage engines need to be shut down too. This gets done when shutting down the routed store, but if server-side routing is disabled it does not happen.
+69ee67861803466463eb6ae2633b3bdf786a4533: Add properties-based constructor for spring. Spring can't handle the fluent type interfaces. Should be useful for initializing the client from a properties file as well.
+ae68f2ffd867b29fc674abfd21a84cb7107a491d: Add helper setter methods for setting ms. This is useful for spring wiring.
+f9bb61df7c62f4976f1b7086e19686deadd7d80c: Routed store should display any errors it sees.
+65c900d92d406356ad8a4b1f7995dc5dc23cb124: Clarify javadoc on routing tier.
+95ab1e2340c68e99f03044d831f388f9d8f2420a: Fix severe bug in connection pool. It turns out commons pool synchronizes the entire makeObject() call. This means that only one connection to ANY server can be connecting at a time. This problems shows up quite severely when you have a host that is hard down on the network, and hence the connection will timeout. Exacerbating this it turns out that java.net.Socket does not use the soTimeout when establishing the connection, so we were getting a near infinite timeout which blocked all other connections from being established.
+3a3db2b6dc8924ecfea81c102df7e41fdb2ed0d7: Fix bug in socket server: open connections are not closed when server is shutting down. Apparently calling interrupt() on blocking IO does not have any effect for sockets. To fix, added a Map of active sessions. Each session removes adds itself to the map when it begins and removes itself when it is done. This allows the addition of a killSessions() method in SocketServer that will forcefully close all the open sockets and thereby terminate the client connections.
+b09c9f9bc2dfffa48b4af99d6d614d363afcb5ce: Improve logging. Remove now unnecessary service name in socket service.
+c4c27c28130c744762f28a869242d4f22f724c2d: Make client and server negotiate protocol at connection time. Eliminate admin port, as this is now just another supported protocol.
+1a5d7eed541b5bd52a4c49ab767dc4fceb8c2247: JMX improvements.
+10d24376c72a9f5569f77dd12dd3be9bf9f523dc: Log any BDB exception in the server error log.
+a8c71ea1686ac82fc58490bca00ff8f7f63592b0: Merge branch 'master' of git@github.com:voldemort/voldemort
+7033e0fb1753b4f25093d2bd1a0d90a255624258: Misc. JMX improvements
+bc91ded25eda6031ecb592f8bc138609a64c8d3f: Improve logging for failed read-only store swap.
+7fa3e0678e7576387051d4e344e35645033a8b53: Merge branch 'master' of git://github.com/voldemort/voldemort into voldemort/master
+f4b3d82dd5975f617e62c879a92d269baff1b712: google-collections 1.0-rc2
+21de293b0bad522f42913fdca11cf989f3419969: Add support for one bdb environment per store.
+2ededd34bd61746089fbbb4bcb1263ee2341faaf: Revert accidental change to src/java/voldemort/VoldemortClientShell.java
+3f736d7300e8c80706894b96171f2ceaf85b8a03: Merge branch 'master' of git://github.com/voldemort/voldemort into voldemort/master
+a00c5d3c423498121eebf4094b319f92befbedd6: Merge branch 'master' of git://github.com/voldemort/voldemort
+02bc2be2781578dc10cfc52926bbcc8c79e0bd30: Implement command shell for C++ client
+f2dcd039f934197b590e7f420505987c265226a7: BdbStorageEngine : add some output re cache, cleaner thread and log file params to output on startup
+62f6228634efbbdae4e5c2a8b4f8d4554419206a: Remove pooling of FileChannel and use only non-stateful operations.
+d28dc46352f608e6fcef190cf606ea2342042ceb: Switch to using FileChannel instead of MappedByteBuffer for .data files.
+2efb591f3204590902a5d758dccb77cfd6a2eba7: Merge branch 'master' of git@github.com:voldemort/voldemort
+679e1d5cd007a0a9cb2813bd155622d7a1e904bd: RequestCounter : remove my spurious set() (thanks Ismael) and refactor to be more linear
+509707414db16278781d95ea3e9a215152db238f: Merge branch 'master' of git@github.com:voldemort/voldemort
+474bbf31937e748fab620a9293b3b9bcbbcd3df4: RequestCounter : fixed bug where infinite loop was possible (and happened)
+2b1af56bf7e48b32c2087fc02e6daf8346e3387c: Only clearing buffers after reuse if we're re-using an existing one.
+bb06b5ee289c15c734461fa63ef9e67780357f8e: Ack. Switched printlns to Logging at Trace level.
+887422a5cd817154114a55cf4186a1acfecb5c03: Switching to AbstractSocketService and letting either implementation be used (hard-coded at present). Also fixed a bug in AsyncRequestHandler where buffers weren't cleared :(
+2753c1c3075435711c1578a3464dfc5eb32ca219: Merge branch 'master' of git://github.com/voldemort/voldemort into voldemort/master
+78e507f54e10140f00e7b3fe2afb4428b4a351f2: Minor reshuffling.
+9e08c89a95a5d79e3bca3edd100c859d3929f521: Fix and test for github bug #18: IllegalArgumentException in RoutedStore.getAll().
+34a57c2e6f89b0b7eda0d44ed5f56d06ed19833b: Updates, refactoring, and expand/contract of buffers.
+285acd527d3e8265636022c91c1578616c2536d9: Misc. fixes for the python client. Ensure that routed requests use the right protocol. Ensure syntactic reconciliation is done server-side.
+1e251ae754b9220ee6d3eec050ee893a73cebbaa: Further work on partial reads.
+90806f52d688fb92750ac0624620a0c96ba1073a: Fix NPE in protocol buffer request handler if the store name was unknown.
+f4e64f7b9be32f925f0c28a30b4d881506151b04: Updates to allow for partial reads.
+777a1298bc1bd4f9c2ac8787c95c9a42e1cac5d5: Merge branch 'master' of git://github.com/voldemort/voldemort into voldemort/master
+08220035b86565e2ecdf44be3d50d18220115106: Remove redundant String allocation.
+aa7ec2037784bfd1b853c780bb080fb9be479220: Release lock before throwing exception in close method.
+cd5a7a5b65f88f81acd32e7309c54dfbd1199693: Make GetAllResult a static inner class.
+36f1fea6bf9baf7369f5c45a849124798b8bebd0: Fix command line argument stupidity.
+88da71441bda88f42254fa56087a24551cfce814: Generalized the SocketService to AbstractSocketService such that the StatusServlet, StatusManager, etc. could be reused across socket service implementations.
+754188152bd7f6065615c11fe7dd2f4ed3fd1ff9: Updated to allow number of selectors instead of hard-coding to # processors.
+284a84fbfbab0b2353aea3d3540f177c8f31e097: Synchronizing with SVN-based changes.
+5983d90dda6ab2b389b37338b16a1cedc2ad5f71: Merge branch 'master' of git://github.com/voldemort/voldemort into jkreps/master
+e021401870c241e751aaaa0c293ce77827a075c2: Test (ignore).
+6971600bc9963426d4d78fd4be4b02e148fd0359: Fix protocol buffers problems. Undelimited pb messages can't be read as a continual stream. The new PB protocol is
+21928d3cf46b17859239513637892dece9224230: refactored some names as suggested.
+36368c084eefc3ae82bdbb003461489de0fa18c8: RebalancingV3 patch applied.
+d9a963fc3333d3bf84fe12f333ea5a3593e48470: Fix bug in io buffer and temp file initialization. Rename temp file "chunks" to segments to avoid confusion with read only store chunks. Add jopt parameters for store swapper.
+c4982dbe14f843373dc32d6cd4c563a80f20c10a: Add Commandline options for store builder (second attempt).
+e0126cb8bcd66422787626dded208a9a9eb585eb: Add options to store builder.
+3029937819ddc5e25cd5f3d6e192ee1398ebaabb: Add proper command line options to store builder.
+79a6660f96ef74450734e79860b98c3796e7dc14: Replaced BoundedThreadPool in HttpService since it was deprecated in last jetty checked-in  Modified RemoteTest to take better style parameters and support reading keys from a text file
+497e662f14dc64295b77942e299958868a737ac6: Fixed typo in adminCoreThreads that was causing an IllegalArgumentException in ThreadPoolExecutor because coreThreads was greater than maxThreads.
+231723ca6c55560b74ab2d4cdd17b6e59471382d: Refactored RequestCounter a little bit to keep track of a global count Fixed bug where RequestCount gave out expired data Added getDisplay?? methods for shorter display of float values
+f6b071a44a2d7b91c82c5d660a5e207e2ade9f08: Fix Issue 115: Wrong key used to retrieve server in VoldemortServletContextListener.
+050d68f31f34485f1e3bf79e7ac0622f880bb9a3: Replace successCount.setValue(successCount.intValue() + 1) with successCount.increment.
+53a6c470ce9aad34f2cdb3ce5f6097de6ad8134e: Large part of Issue 113: Upgrade various dependencies
+54cb12dac27e8461ecf8ea2efa2f884be49ac6c2: Adding a new class and shell script to facilitate the building of a Hadoop Store for read-only.
+3cc2e8dea1ba0aa76ccf944e59cd5c443cc25cf8: More work on the request counters and the JSON output.
+fd8239002741505c2bc18697ce3293c542530899: Fix unnecessary cast introduced in r386.
+3cd5fd80474cc7675c184afd91801da5caacea94: Fix compiler warnings introduced in r386.
+3b731d1167721c88bfc15701c6848ffb5cafc947: Fix nasty bug in getAll where failed gets due to a failing store would not be sent to a working one.
+21035db1d49814b870128e44912e29ba9906c65c: Fix 3 issues in getAll: potential NPE if there are no extra nodes, nodes could be duplicated in extraNodes and unavailable nodes were needlessly attempted.
+103d37fc6f87c7a485b3b18d324cdafff05c2121: Add rest of current stats to the JSON output, and also add a per-store stats reset  capabillity
+1399cd8a9f4c42370247f4d6995bde7631eae432: Issue 98 : patch from Elias Torres that adds per-store counters and a servlet for fetching status.
+66bbaba44fe771c241812a50ad16b08088e322a8: Ensure we never delete files while holding the write lock, as that can be very slow.
+f865c490fefdeb68932f65f91a7d3cc6e9a4363f: Added some comments and refactored some field/function names in AdminClient.
+b4e75ffe3cf7ec85750d9342fa4ceea3f52a394d: Metadata store not getting registered after admin client patch.
+8bf82db1f600210232c18bcf850dffaa7483f70b: Typo fix, tranlates -> translates.
+a71e1e0bb3280ce6def9af9d1c2ed79554905a3e: Remove usage of System.out.println.
+a9ab578ade6d04afc2223117282f8c363d052c15: Fiddle with AdminClient method names.
+64e32dbb04c746429521515f3cbd7495f47aece6: Fix warning and eclipse classpath problem.
+685f48aea6fc3670bb71d4df471751d347ea7f1d: Commit Bhup admin client patch.
+5961706caf8469be9db9555231bcdd5f51bc160c: Not re-creating so many InputStream/OutputStream objects on each read. Caching them in the SelectionKey's attachment.
+80defea449e72b6bd44d2a588ae60498b060c6ca: Patch from mirko.caserta, fix NPE in VoldemortServer constructor.
+028d1119a41ebda2481f60e82dde98e56098aa81: Initial check in of my NIO socket server. Obviously still a work-in-progress.
+9c03afbbd7779644b359496607e5e5fa498ddcfc: HdfsFetcher not using supplied tmp directory.
+f77aff653637650ca891083336dd420d2384cd29: Read-only store improvements: (1) Break store into chunks so that multiple hadoop reducers can do build in parallel, (2) move to mmap instead of RandomAccessFile to avoid read-ahead, (3) rename everything to ReadOnlyStorageEngine instead of RandomAccessFileStore for consistency.
+83fed1e78720bf9a1e3cbd77ef57256c8ea1df46: Replace unchecked cast with checked one and remove now unnecessary @SuppressWarnings.
+fd525f23d00e2e278ce62de51585b0b5ef372f79: Fix raw type compiler warning in instanceof check.
+b822e9c1206aab72c97c95aff2e68ba26dcc6fa1: Fix raw type compiler warning in instanceof checks.
+0e8aea2ca071c690748f2879692e78a53c1a26b4: Fix raw type compiler warning in instanceof check.
+4b629bb034d3c9588982a19a41bab2c450110942: Fix raw type compiler warning in instanceof check.
+5bbce0bf88d97f37d3be8b243993c76a33f60931: Add rollback. Fix bug in swap.
+40018a1359d7958bdf240abdc376ecd752171508: Set timeout for main method.
+d3bb99a283fd90075073ce7d387b7c78a499670f: Fix bug where exception thrown in GetAllCallable was not being passed to GetAllResult and remove unused node field in GetAllResult.
+5559d2be9c17a9e2f685709e875da20c370ebbb6: Fix javadoc bug--bdb.flush.transactions controls flush not bdb.sync.transactions.
+afc9327c46351e8b9cbdf15209c81785793ba59c: Rollback if open fails in RandomAccessFileStore.swap()
+d2274da1d66fd262b3064275cd5ae9efaf4487d4: Misc. read-only store improvements. Some cleanup in hadoop contrib. 
+44d1cbaa2d20f62489dff6f872bcf5a12f160bb6: Optimize RoutedStore for getAll. Patch from Ismael.
+75feed3fea568d72bd17948208df221cdc30d705: Improve boostrap error messages by including the invalid URL.
+0d9ae3336918d57582d07f3179c4c8bbf9e2f168: Issue 99: Replace Join.join with StringUtils.join
+af7cab0ad762a00ee80889bb5c40a2b40fe33f42: Fix and tests for Issue 100: DefaultStoreClient.getAll broken by metadata refresh changes
+070a81f4ef6229ca22a9b0f7d4c69a0004c9bb66: Fix issues where some setters where not returning this.
+c49df1b09aa617de5f0180ae2da943313c4d7390: Add support for protocol buffers based network format. Add new client config to avoid crazy constructors on the client. Add alpha support for server-side routing (still needs support on the client, though).
+5ba2b99ccf8a7bae212ed64ac71130313783a69b: Rebalancing patch 2.
+d62836261339233289ba5671920fdf881c1f030f: Merge in changes from li-918 branch.
+c285d2e23c826be0379aab65082cd927e9faf0d5: Fix javadoc problems.
+35af74b4665a52e7dbd40c468b1bebec7527a21e: Fix Issue 97: Use of platform-default encoding in ByteArray.valueOf(String).
+69ee72e5cf78c16c34a6a9bb9c7bb19f3bd936e9: 
+7ef593b002f7ed6b5e52b467adca2496c59195c1: Merge changes from batch-store2 branch.
+e436439eef4d16783b19acfef289ea7cf63a4717: Fix newly introduced warnings in JsonWriter.
+ec050be54a59bb4b2df5fece488074f586db0a1f: Fix for issue 96: using preferredReads instead of attempted reads. This can cause us to block on a non-existant read attempt if there are less than preferredReads nodes available.
+9120d142df0c19cfd5f94eff8d6bcc9cb1254391: Fix Issue 95: ByteArray caches hashCode but is mutable.
+0d00d3838cb457285a1f4d9e1ace190c4d9b6a37: Rolled back Change in JsonTypeSerializer. 
+e62376126a9a02f0f4a7d3fd72711990a2c33c09: Date support added in JsonWriter
+e15023c0c5db29746e422852cb6cdbef2f5eb6d0: Replace Integer.longValue with Integer.intValue as we compare the result against an int.
+43d4c5e174bdc905f727145a08a1576982442adc: Added a JsonWriter to write Json Binary data as JsonText.
+83e35a7bc79dcc5fd846aba52934a1026b170e00: Cluster equals fix
+961bfd09ee6115fbc0bd2ff045dffd05fd487a8e: Fixed Cluster.equals()
+f0754d787abccc054338217685b5e25e72a6057e: Fixed suggestions for http://code.google.com/p/project-voldemort/source/detail?r=293
+eb04276f906fc9eeae512bdc65056b5f2954de84: added a try/catch around the write() call in method JsonTypeSerializer.writeMap, to show the name of the property field in the stack trace when a property fail to write
+970796e35028dd8c10f708ba256452e2dad7aec5: Revise comment on inefficiency: it isn't too bad.
+302ec1469f670c23766587d06d0f47992c02cbea: Simplify equals implementation, rely on List.equals to compare the versions instead of doing it manually.
+b8acff0229fdce8b43328575d4d65fbeca64c503: Minor clean-ups: replace new HashSet + add with copy constructor and inline it variable.
+8c08e267b4f17c886569938f13f790c4505a102a: Fix and test for Issue 92: ReadRepairer.getRepairs should not return duplicates.
+c113bb9b8bf18d74cdf4b413fd86ac71811f109b: Test and fix for Issue 89: Sequential retrieval in RoutedStore.get doesn't consider repairReads.
+bfd828f865271fb82b88781aa0e14ce6c5f22799: Fix typo, CONCURRANT -> CONCURRENT.
+14bd90eb52fa56d4fbbddcfb5a719d9b48af4a35: Use logger.isDebugEnabled to avoid unnecessary String concatenation in non-debug code path.
+8edd688ee016936d9daec6319c8d82fb9ac2b7a2: In getNodes, initialize the HashSet s with the right capacity.
+6010d30e8560a6383592cf39a0e0177f89d80e25: Partition-rebalance subTask 2: checked in.  http://code.google.com/p/project-voldemort/issues/detail?id=84
+e1decd9d318a39a93ce03e715a7cbbf22722d67c: Add final modifier to AtomicBoolean isStarted.
+e88f1dde193c4f0e3343ef59b9a520e2163ecf3e: Fix issue #80: InMemoryStorageEngine simplfication, patch by Dain Sundstrom.
+6568b055cbeea185ba688c3acd1a7a6102183f73: Fix issue #78: Race condition in InMemoryStorageEngine, patch by Dain Sundstrom with slight modification from me. 
+e44ec88c57c1293a5b71598e0ad0fed403387744: Fix Issue 77: RoutedStore.close should perhaps call shutdownNow if awaitTermination timeout expires.
+f001facd1694515c6888ede9858c823b8598b796: Apply patch from dsundstrom for Issue 79: InMemoryStorageEngine.put() not always atomic.
+f415a9ec2170c2937b04afa0ed952a432febeeb6: No need for atomic boolean in RandomAccessFileStore.
+f43e3f9d05a0a91569ae1fc86ae7e3cf182fbdca: Version in Versioned need not be volatile since we never update it.
+c14aa18d3f1486b9baacd3d2096752a9e712ca8f: Fix typo, rename MergingInconsitencyResolver to MergingInconsistencyResolver.
+3c46ffddc47598cbc1f38df6c2841ff2276e8398: Clarify byte calculation logic.
+11ecbeb1f04144f006c4166152684525a1b19441: Add plugin mechanism for storage engines plus MongoDB plugin.
+9600f50d5e50709c634593611c82ec48ad6260be: Remove half-finished, untested varint code. We can revive it later if we ever decide to do this for real.
+3de9911c7d4133e0a3a33bb29307edf8e93ce385: Move unlock operation above logging statement to avoid (rare) issue where an exception is thrown during logging and the lock is never released.
+f9be4cb6b429feb706a9b8cd2cabf1ce5e627d91: Replace key iteration followed by get with map entry set iteration. The latter performs slightly better since there's no need for a get call per element.
+a0f8207f1d968a7b6beda6a0e03806bd2b4f6fd5: We want to show the actual arguments in the exception for construct so use Array.toString(args).
+0b32f71f713d777fcd05eefe5d9f9576e98bf6f2: Add final to various static variables that are meant to be constants.
+d397f2091e9de0e2ea81a6a776fde71968cf89d5: fixed SocketStoreTest.testVersionedPut
+768ed4082c4a53805dd95c5cc1bfa4be5388bffc: Replace usage of raw ArrayList constructor with Lists.newArrayList and remove now unnecessary @SuppressWarnings("unchecked").
+c3f38b67d117d778cca3ab729ddb4b18899c7f0a: Add missing @Override.
+c2b3363d9d4b10e583e04db6bb1a1b4a7180019e: Zero Warnings achieved svn stat contrib/ test/ src/ 
+77c24ce065b0fdd308474391c35304b0d42762e1: Add @SuppressWarnings("hiding"). getStoreClient is doing something a bit suspect, but it should work and I don't see a way to do it differently without changing the signature of StoreClientFactory.
+70b2438ec2da1a4a8288078eb30c38e15c9c7a11: Remove unused logger.
+164eb15693425f9a8653f2e257d563e84714bfa4: Introduce unsafeGetSerializer.
+e894f50e6f248ef9f2f14434b7e106f19a1508b8: Add @SuppressWarnings("all") and a note saying that the class is work-in-progress with a link to http://code.google.com/p/project-voldemort/issues/detail?id=61 .
+228a8505d764dca9113e4d23ff0e36397ebef633: Add test and fix for Issue 62: InconsistentDataException doesn't store versions passed in the constructor.
+e641117280114ef67b02309f2b39c6f657301d4d: Add @SuppressWarnings("unchecked") when assigning ListIterator to Iterator<String> since the commons-io is not generified.
+820771692769d0fbd6006ee7136f274f34e723aa: Fix more generic warnings (Issue 55: Eliminate compiler warnings).
+1ec24896094831f08f4dcbb2cb0286a792e817d7: Change Class to Class<?> and access static fields directly (Issue 55: Eliminate compiler warnings).
+9401006760867f61eb663bef9bc2fa6f3cdd0f74: Add missing @Override, down to 109 warnings (Issue 55: Eliminate compiler warnings).
+d595130b091b041d4d4b92438e3cce8c9a1cdb33: Introduce Versioned.of and use it from places that were relying on a raw types (Issue 55: Eliminate compiler warnings). Also fix unnecessary usage of @SuppressWarnings("unchecked") in Versioned.equals.
+7a9a009696c09b2b1a39da059407bd0a9bd7c34c: Set type of msgObject to Object instead of T since the reason we're creating it is that we're not sure it's actually a T (fixes compiler warning).
+9fceafbbae8d71f57b555f9b6c2219dcdfdfe52e: Access static fields directly.
+927ee358138ba097da6572a0779d97d8590fe877: Fix Issue 48: Warning in HTTP client with large value size.
+becc8297aa204f3d619a164ba48bc066a9315d90: Patch from Tin (http://code.google.com/p/project-voldemort/issues/detail?id=51).
+72a72f199da64ac2557e12348aa77559ae6c0299: Add advisory @Threadsafe annotation to Store.java at Ismael's suggestion.
+02caf1a5456f087615c931cbe52e83a917498e21: Change over from Entry to Pair. Patch from Ismael on http://code.google.com/p/project-voldemort/issues/detail?id=3 
+a8ccc0d21b9c7849b61114cf31ddc2f16f66f961: Fix bug with empty key for http store.
+00d7e1e6e01e344b9f38f3910a3a29865dcad154: Additional test cleanup.
+84a1b526a2ed4e9c02a778cd6304b3dad62995d5: Fix transactional bug in mysql--transaction must be committed.
+35581b67f83a0e9b0524cb57d51879339e0ef664: Upgrade google collections version. Patch from Ismael.
+08d1c9d8fe0bcefba0e0f6cd5517d848eda045cc: Shutdown connections when closing storage configuration.
+e6fa48569647d482c3af3640ac14717496eaa967: BDB storage configuration close() method should be synchronized. Move lock internal to avoid shared locks.
+9b70413b8b2f7511008c319a09bb4073c99664cd: Multiget!
+c80ccd2fc66e7732ad775be9ffc933c2f048f545: Externalize socket buffer size to control receive/send buffers on sockets. This should improve performance on bandwidth limited uses.
+b5d1bf798d306dc60d57bde1fe913d80cf169116: String serializer should default to UTF8 if no encoding is given.
+2f0129a103568c376f5c6e7ea2f6c16e39772784: read-only swapper and test committed.
+2af7a88a8ff8dea091db6cb081e2e689da155087: Simple logging and comment cleanup.
+689604b7e5df3d2086ee6c43428b3c4eb262c5a9: closing random access file store must mark the store as closed.
+5b5df41cea88f5cdf993ed640e3a66bbc659dbde: Fixed single node bug in JsonStoreBuilder.
+bbaec5f74761fb1521c0cfcef336e858ef853a36: Stop services in the reverse order in which they were started. This means that socket/http service stops before storage which is important to give a clean shutdown (otherwise we still accept requests but cannot answer them).
+f36ad0ba65856b5fba0164d4517ab8a889d1055a: Add the ability to prepopulate the cache for read only store.
+adba2a89a3c30b5bc89c09e5fbd8aea1b83220df: Add equals method to json type definition.
+08bb2dff9ac4af583662318587a6243c2581e159: Remove broken constructor.
+ebde04e64c5e7504bdcd12b3df6cb9ad6a0762c7: Maintain stack traces. Patch: http://code.google.com/p/project-voldemort/issues/detail?id=37
+293a888772af9589b0efb9d97f982b951317635b: Increase send and receive buffer sizes to improve performance on larger values. Still not configurable.
+4afb8baf8051c565797f720c0a523dfc4527cbc4: Make cache an array instead of a hashmap.
+ad1756cae624e9540c909c6c2ddd6eff92c5e822: Remove unnecessary logging.
+5810e1665d881b53fc2c897aedd1abad24cd63c2: Read-only cache size bug fixed.
+0229d7fc6eeabca69c712324a4abd9d87ecf8001: Remove unused list. http://code.google.com/p/project-voldemort/issues/detail?id=34.
+7c3013e87e5d5b1a739fd92b1bd366cd11853685: Fix Versioned.equals()--remove useless null check of this. http://code.google.com/p/project-voldemort/issues/detail?id=39
+b0ba00d954bc683e3e05216684d73396a1e07980: Fix bad null check. Patch for http://code.google.com/p/project-voldemort/issues/detail?id=40.
+4b5b216fc1d3ce09f8ea81d0f9ecef5598ec3cbf: Replace usage of InputStream.read() with ByteUtils.read() to prevent incomplete reads. Patch from dbrosius.
+aeca98606e79a6564012d1c34f4fa2cd61646e09: Fix NPE in QueryServlet. (http://code.google.com/p/project-voldemort/issues/detail?id=33)
+ea06286a35a62771ff8963d2ea52f26479e2c47f: Remove error message containing the obsolete terminology "tag" to refer to a partition.
+bfa74badef5f202153a48331b17939f22bdacb2a: Make NodeStatus final. Patch from Ismael.
+258dab5cdd459c4fae3e2529edf8cacaae0353f8: Fix bug in metadata store that causes errors when a file named stores.xml~ exists.
+897a40b90dc384aa982f45cb634e2593e37b503f: Add a close method to StoreClientFactory to make sure it is possible to cleanly stop everything.
+a7f8c73dd5b2fad7770db1d2b6ee0a0045248c46: Add javadoc to more utils methods, and make file tests take File as well as String.
+1b788672ed3daefc8b1ebb0684d354134907fd5c: ReadOnly store batch data indexer package as contrib.
+0b5a479a18beafdc4a9543d9b4845e91d94bf56a: Remove unneeded reflection. Patch from Shu.
+76d8f1df7865720125174c4848b1ae7827797dec: Do not share unsafe Validator instance, instead share Schema instance and recreate Validator.
+8749e67966fb7ea788ca24a6aeb9724f156a424d: revert log4j changes.
+d9bc79edefc0a5190c1e2b69bc935e146b2a306e: Add thrift serialization.
+799800f8e9b664028a17751c5c2e29f942e3f26e: Big cleanup patch from Ismael.
+bcce18f30a8419746aab0d8356d41eff10383596: Make logging store give an optional cluster name on the server side (to distinguish logging from different clusters).
+17da014f124c15a034e92dd8a62687dbdf005582: BDB storage engine cleanup.
+b2dedf4e0f7e9ae25b5bf4a4de0affe41c122424: Fix for utils test.
+d7ff3d94fab443e31f573d98af0f0438252a6c91: More Ishmael patches: param check, int overflow, meaningless sanity check (added test here).
+0dc136f5d4657e238ef48aa735cce89c16985969: Redundant null check (patch from ishmael). Add meaningful docs.
+08cfe1d4a6232f2d66a92ac092132dd758482acc: Using StringBuilder v. String Buffer. Patch from ishmael.
+9f0b2801a1b3b5bcdb31011a8bd38faf9e4c4ded: Swapping of required and preferred writes. Patch from ishmael.
+7df4ece4905dcbf35dfba6b2737fd9504144ad23: Add protocol buffers serialization! Applying patch from Ishmael.
+1c931693dacc7d1c96fda5cc33f82e2e1e0febd4: Create all data directories if they don't exist. Patch from ismaelj.
+9bbdffd6292535da4a44fb2bb621135ea3087754: byteUtils fixed.
+6859b6fb50e235352568e31fdf09bffec259a7cf: Fix a bug that blocks client shutdown by setting daemon on the client threadpool. Make setting version=none work. 
+b97c48bf47c1a81a6ddaab82abbdec7bcc0dec70: Change docs to give the proper class name for VoldemortJsvcDaemon
+0251b8dbc80b722ec53142f9cd6aec8af49f953c: Add Jsvc daemon patch from Eric.
+7163e71aadd64ea1075b34543a2a4914c3676b77: Adding trace to exceptions.
+9bb13d70f015b5086f662ba1dc708c2bcab4d896: Add page for swapping data files for read only stores.
+12d8844b026a4460d64809f7624a48292549bbf8: Improve mysql exceptions.
+fe67f978974f9f46ccb65b6c79216e6d419c155a: Performance improvements for external sort and improved logging.
+8219a4aed922b0819281cc62e504e4706232c808: Cleanup. Add support for removing versioning from voldemort config. Misc. improvements for read-only store. Make external sort multithreaded in the sort phase.
+0bacb95dd6a2283b60ea1c418089920a0d73e79e: Fix bug in read-only store builder that was building keys without versions (but looking them up with versions).
+0a7dbad514a00a2daf118a2873f2c94834dd7a31: Support either batching transactions, always writing transactions but not flushing, or both writing and flushing every transaction in BDB.
+599620fc87bc12d54ad2940d4eeefd70f5038bfe: Patch to make mysql db name configurable and to create non-existant tables (which matchs bdb behavior).
+e8ddf4d1349f653f697453db6a230ce7b7ae6277: Remove spurious logging statements.
+dc3d0dee6485582dfc59fdccec779625e7d47b98: Remove all references to Objects.nonNull since it has been removed from newer versions of google collections.
+a8c41f19c4652af89c44170ae20e291b1dad1309: Fix bug in binary search in read-only store.
+1e68b44ad9db865751770bc2e2df1f01e109faeb: Add license header to source files.
+9e864bc2c1e9b2d1bc153702add7af1501eb59c0: Some fixes for read-only store. Some misc. cleanup.
+7d77574c1b4d1ceaebe50fa7499d4a294620101c: read_only store modified.
+46a5b4d7e916e3fe0a9a77659599d74709f18c2d: Fix serialization bug with writing boolean values--missing break in case statement.
+f177152c7a823d9f751ef1b11950b3fd0cbb963e: Add package.html files for more packages.
+fbd0f95d62ac2c5e97e5a4df5a732e9342d60da1: Initial import
+d3a84c95524327540c6db8678e5ff6c0f25ec80d: Do correct rollback in case of failure during migration of partitions
+ad3ffc67e5cc5809c1f6584f814bb13974eb781e: Tons of logging changes. None of the existing async processes were returning useful messages.
+3883354f2eb312f966b5323ec1b420ad7da4c818: Added 'key-distribution' to the admin tool
+bf26615ac40a08500cc2a07492bc538e1dee344c: Added a 'check-metadata' option to Voldemort admin tool. Picks up the metadata from all nodes and checks if all of them are the same.
+65c0f9f1f68e1d63798a2c897a59ab734219a09c: Fixed problem in fetch partition file stream handler wherein we weren't closing the file channel
+a022471c13f7a9b915a9d1cd2b0395de0a9b4319: Fixed all rebalance unit tests
+b7b31bb369c37259481a84a807d9ca75623eff3a: Moving around some unit tests + RO file transfer now only works on non-mmaped files [ to avoid over-writing existing serving data ]
+6b1cf6fdd1f89357931b781abbc79f1daf0a4116: Print Key distribution in the plan + Some unit tests
+e1e99c6795e7812f6f19083cf75122dfb8dd81a4: Some more unit tests
+283b0f4e71485c303beb282abef012259f41c86c: Tons of unit tests + Logging
+234aebb85c1eb9fdd4ca7d02b6dfde04fc41e1ca: Intermediate check-in with changes to Rebalance partitions info
+dd262be2130132cc44b79d61b74d1aa969aa2e17: Fix some more unit tests related to Admin services
+9f186df68db044bf30daed52130acb9401dfeff9: Another intermediate check-in with changes to all streaming protocols
+a7c9b91f1f02d3b4a82b53edb82dfa086743962a: Tons of changes w.r.t. streaming api - Breaking the wire protocol
+1bc03d2e86817f65450884345b5f65a68f9aa904: Intermediate checkin with changes to cluster plan ( now uses tuples instead of only partitions )
+a14074433244993e2272094985d45ffac5d82342: Cleaning up some Rebalance utils unit tests
+4b4e4b860dade8dc990d1d907d92eaf3896c06cc: Another check-in with tons of logging changes. Need to fix the RebalanceUtilsTest
+821c85cb7922b68d9812c975612d3520f0e5b45e: Intermediate check-in with changes to how fetching of partition files takes place
+369a865ed9244f64bdc2e6859e876cf58dd1df22: Intermediate checkin - Refactoring code out of Rebalancer into Metadata store
+21e21286b9a187b0594bb675c9bfda2a0d14a529: Another intermediate commit - Refactored Rebalancer code
+e70d73e5e101553d1bd3e086b1277ca700e12559: Merge remote branch 'origin/master' into rebalance
+1a8ec6cf80dee253780f8ab7796e7b057e5af394: Another intermediate commit - Added more rollback options
+d06fcec37fb3f3d45ffbd3fe15eafce77ba64069: Another intermediate commit which has the code for changing rebalancing state. Still need to add rollback options
+9cce797fc3d48bb8e6157283c040ffb1a9bc60c8: Another intermediate commit. The rebalancing code is going to work as follows - for ( every Stealer node )     for ( every primary partition to be moved )          - Generate Cluster plan          - Move RO data          - Swap + Commit cluster changes + Move into rebalancing state          - Move RW data
+78a0934bf9f67c8a8e44ee983e151067b2be0fbe: Intermediate check-in with a lot of cleanup + protocol changes
+a349dc2661b083652183c2d54eeee838d39135c2: Merge remote branch 'upstream/master' into rebalance
+b91a29fffb2a38f0b34103ecdc4f4afbf4efff49: Refactored a lot of rebalancing related code. Moved out common functions in the controller to the utils class
+4fa8e76d9edfebf41097cd27775d67a42a2961bd: Removed uniqueStores function from RebalanceUtils - Was being used by Migrate partitions
+6e89c335b90c1efeb8409e54a1f9a1c0e68903f2: Got rid of the redundant Voldemort cluster viewer. The new rebalance tool allows you to view changes to your cluster. Single complete tool >> Multiple broken undocumented tools with esoteric names
+4dc095ffdfbc71c9a6b44bcb70e3c8c3d61fb928: First attempt of re-writing rebalancing. Still need to fix read-only stores edge cases + merging
+c38773e0f545a1b8443464c73f54e7855c048dd2: Get rid of "grandfathering" and "migrate partitions". This is a step towards having just one "rebalancing" code

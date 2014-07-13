@@ -1,5 +1,6 @@
 package edu.ucsc.codevo.controller;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import org.eclipse.core.resources.IProject;
@@ -16,6 +17,10 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -36,13 +41,23 @@ public class AnalyzingJob extends Job {
 		try {
 			final SourceFileAnalyzer analyzer = new SourceFileAnalyzer();
 			ISelection selection = activePage.getSelection();
+			FileRepositoryBuilder builder = new FileRepositoryBuilder();
 			if (selection instanceof IStructuredSelection) {
-				monitor.beginTask("Analyzing selection", ((IStructuredSelection) selection).size());
+				IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+				monitor.beginTask("Analyzing selection", structuredSelection.size());
 				@SuppressWarnings("rawtypes")
-				Iterator iterator = ((IStructuredSelection)selection).iterator();
+				Iterator iterator = structuredSelection.iterator();
+				IJavaElement element = (IJavaElement)iterator.next();
+				builder.findGitDir(element.getPath().toFile());
+				Repository repository = builder.build();
+				Git git = new Git(repository);
+				git.checkout().setName("c38773e0f545a1b8443464c73f54e7855c048dd2").call();
+				element.getResource().getProject().refreshLocal(IProject.DEPTH_INFINITE, monitor);
+				// reset iterator
+				iterator = structuredSelection.iterator();
 				while (iterator.hasNext()) {
-					Object element = iterator.next();
-					monitor.subTask(((IJavaElement)element).getElementName());
+					element = (IJavaElement)iterator.next();
+					monitor.subTask(element.getElementName());
 					if (element instanceof IJavaProject) {
 						analyzer.add((IJavaProject)element);
 					} else if (element instanceof IPackageFragmentRoot) {
@@ -76,7 +91,7 @@ public class AnalyzingJob extends Job {
 					}
 				}
 			});
-		} catch (CoreException e) {
+		} catch (CoreException | IOException | GitAPIException e) {
 			e.printStackTrace();
 		}
 		return Status.OK_STATUS;

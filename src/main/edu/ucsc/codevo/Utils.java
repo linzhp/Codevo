@@ -24,13 +24,14 @@ public class Utils {
 
 	public static void main(String[] args) throws Exception {
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
-		Repository repository = builder.setGitDir(new File("E:\\Data\\voldemort\\.git"))
-				.readEnvironment().findGitDir().build();
+		Repository repository = builder.
+				findGitDir(new File("E:\\Data\\voldemort")).build();
 		Git git = new Git(repository);
-		Iterable<RevCommit> commits = git.log().call();
+		Iterable<RevCommit> commits = git.log().addPath("src/java").call();
 		for (RevCommit c : commits) {
 			//			git.checkout().setName(c.getName()).call();
-			System.out.println(c.getName());
+			System.out.println(c.getName() + ": " + c.getShortMessage());
 		}
+
 	}
 }
