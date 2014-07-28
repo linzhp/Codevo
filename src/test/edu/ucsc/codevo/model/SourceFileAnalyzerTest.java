@@ -33,7 +33,7 @@ public class SourceFileAnalyzerTest {
 
 	@BeforeClass
 	public static void parseProject() {
-		analyzer = new SourceFileAnalyzer();
+		analyzer = new SourceFileAnalyzer("");
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		try {
 			IWorkspaceRoot root = workspace.getRoot();

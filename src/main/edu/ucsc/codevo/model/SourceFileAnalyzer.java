@@ -47,6 +47,15 @@ import edu.ucsc.codevo.Utils;
 public class SourceFileAnalyzer extends ASTVisitor {
 	List<IBinding> vertices = new ArrayList<>();
 	List<Dependency> edges = new ArrayList<>();
+	private String revision;
+	
+	public SourceFileAnalyzer(String revision) {
+		this.revision = revision;
+	}
+	
+	private void log(int level, String message) {
+		Utils.log(level, "Revision " + revision + "\n" + message);
+	}
 
 	public void add(IJavaProject project) throws JavaModelException {
 		IPackageFragment[] packages = project.getPackageFragments();
@@ -77,7 +86,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			if (e instanceof IPackageFragment) {
 				add((IPackageFragment) e);
 			} else {
-				Utils.log(Status.WARNING,
+				log(Status.WARNING,
 						e.getElementName() + " is not a package fragment");
 			}
 		}
@@ -99,7 +108,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	 */
 	void recordDependency(ASTNode sourceNode, IBinding targetBinding) {
 		if (targetBinding == null) {
-			Utils.log(Status.INFO, "Cannot resolve binding for " + sourceNode);
+			log(Status.INFO, "Cannot resolve binding for " + sourceNode);
 			return;
 		}
 		sourceNode = getSourceNode(sourceNode);
@@ -287,7 +296,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	@Override
 	public boolean visit(QualifiedType node) {
 		//FIXME don't know what a QualifiedType node is
-		Utils.log(Status.WARNING,
+		log(Status.WARNING,
 				"Finally find out what a QualifiedType is like\n" + node);
 		return true;
 	}
