@@ -33,7 +33,7 @@ public class SourceFileAnalyzerTest {
 
 	@BeforeClass
 	public static void parseProject() {
-		analyzer = new SourceFileAnalyzer("");
+		analyzer = new SourceFileAnalyzer("x");
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		try {
 			IWorkspaceRoot root = workspace.getRoot();
@@ -112,7 +112,7 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetSimpleTypeReference() {
-		Dependency[] edges = getEdges();
+		Reference[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/String;")));
 	}
 
@@ -125,19 +125,19 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetMethodInvocation() {
-		Dependency[] edges = getEdges();
+		Reference[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/PrintStream;.println(Ljava/lang/String;)V")));
 	}
 
 	@Test
 	public void shouldGetFieldAccessInMethodInvocationReceiver() {
-		Dependency[] edges = getEdges();
+		Reference[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/System;.out)Ljava/io/PrintStream;")));
 	}
 
 	@Test
 	public void shouldGetFieldAccessInFieldAccessReceiver() {
-		Dependency[] edges = getEdges();
+		Reference[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>(
 				"Ledu/ucsc/codevo/fixtures/App$Component;.module)Ledu/ucsc/codevo/fixtures/App$Module;")));
 	}
@@ -150,13 +150,13 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetArrayQualifiedTypeReference() {
-		Dependency[] edges = getEdges();
+		Reference[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/IOException;")));
 	}
 
 	@Test
 	public void shouldGetArrayTypeReference() {
-		Dependency[] edges = getEdges();
+		Reference[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasDependency<>(
 				"Ledu/ucsc/codevo/fixtures/App;.main([Ljava/lang/String;)V",
 				"Ledu/ucsc/codevo/fixtures/Dependency;")
@@ -165,7 +165,7 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetConstructorInvocation() {
-		Dependency[] edges = getEdges();
+		Reference[] edges = getEdges();
 		assertThat(edges, hasItemInArray(new HasTarget<>(
 				"Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V")));
 	}
@@ -182,13 +182,13 @@ public class SourceFileAnalyzerTest {
 	}
 
 	private IBinding[] getVertices() {
-		IBinding[] vertices = analyzer.vertices.toArray(
-				new IBinding[analyzer.vertices.size()]);
+		IBinding[] vertices = analyzer.entities.toArray(
+				new IBinding[analyzer.entities.size()]);
 		return vertices;
 	}
 
-	private Dependency[] getEdges() {
-		return analyzer.edges.toArray(new Dependency[analyzer.edges.size()]);
+	private Reference[] getEdges() {
+		return analyzer.references.toArray(new Reference[analyzer.references.size()]);
 	}
 }
 
@@ -202,7 +202,7 @@ class HasTarget<T> extends CustomMatcher<T> {
 
 	@Override
 	public boolean matches(Object item) {
-		return ((Dependency)item).target.getKey().equals(target);
+		return ((Reference)item).target.getKey().equals(target);
 	}
 }
 
@@ -217,7 +217,7 @@ class HasDependency<T> extends CustomMatcher<T> {
 
 	@Override
 	public boolean matches(Object item) {
-		Dependency d = (Dependency)item;
+		Reference d = (Reference)item;
 		return d.source.getKey().equals(source) && d.target.getKey().equals(target);
 	}
 
