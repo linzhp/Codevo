@@ -112,7 +112,7 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetSimpleTypeReference() {
-		Reference[] edges = getEdges();
+		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/String;")));
 	}
 
@@ -125,19 +125,19 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetMethodInvocation() {
-		Reference[] edges = getEdges();
+		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/PrintStream;.println(Ljava/lang/String;)V")));
 	}
 
 	@Test
 	public void shouldGetFieldAccessInMethodInvocationReceiver() {
-		Reference[] edges = getEdges();
+		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/lang/System;.out)Ljava/io/PrintStream;")));
 	}
 
 	@Test
 	public void shouldGetFieldAccessInFieldAccessReceiver() {
-		Reference[] edges = getEdges();
+		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>(
 				"Ledu/ucsc/codevo/fixtures/App$Component;.module)Ledu/ucsc/codevo/fixtures/App$Module;")));
 	}
@@ -150,13 +150,13 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetArrayQualifiedTypeReference() {
-		Reference[] edges = getEdges();
+		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasTarget<>("Ljava/io/IOException;")));
 	}
 
 	@Test
 	public void shouldGetArrayTypeReference() {
-		Reference[] edges = getEdges();
+		Dependency[] edges = getEdges();
 		assertThat(edges,hasItemInArray(new HasDependency<>(
 				"Ledu/ucsc/codevo/fixtures/App;.main([Ljava/lang/String;)V",
 				"Ledu/ucsc/codevo/fixtures/Dependency;")
@@ -165,7 +165,7 @@ public class SourceFileAnalyzerTest {
 
 	@Test
 	public void shouldGetConstructorInvocation() {
-		Reference[] edges = getEdges();
+		Dependency[] edges = getEdges();
 		assertThat(edges, hasItemInArray(new HasTarget<>(
 				"Ledu/ucsc/codevo/fixtures/App;.(Ljava/lang/String;)V")));
 	}
@@ -187,8 +187,8 @@ public class SourceFileAnalyzerTest {
 		return vertices;
 	}
 
-	private Reference[] getEdges() {
-		return analyzer.references.toArray(new Reference[analyzer.references.size()]);
+	private Dependency[] getEdges() {
+		return analyzer.references.toArray(new Dependency[analyzer.references.size()]);
 	}
 }
 
@@ -202,7 +202,7 @@ class HasTarget<T> extends CustomMatcher<T> {
 
 	@Override
 	public boolean matches(Object item) {
-		return ((Reference)item).target.getKey().equals(target);
+		return ((Dependency)item).target.getKey().equals(target);
 	}
 }
 
@@ -217,7 +217,7 @@ class HasDependency<T> extends CustomMatcher<T> {
 
 	@Override
 	public boolean matches(Object item) {
-		Reference d = (Reference)item;
+		Dependency d = (Dependency)item;
 		return d.source.getKey().equals(source) && d.target.getKey().equals(target);
 	}
 

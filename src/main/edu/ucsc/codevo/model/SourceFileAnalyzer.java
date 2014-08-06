@@ -39,6 +39,7 @@ import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperFieldAccess;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
@@ -46,8 +47,8 @@ import edu.ucsc.codevo.Utils;
 
 public class SourceFileAnalyzer extends ASTVisitor {
 	List<IBinding> entities = new ArrayList<>();
-	List<Reference> references = new ArrayList<>();
-	List<Inheritance> inheritances = new ArrayList<>();
+	List<Dependency> references = new ArrayList<>();
+	List<Dependency> inheritances = new ArrayList<>();
 	private String revision;
 	
 	public SourceFileAnalyzer(String revision) {
@@ -97,8 +98,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		return entities.toArray(new IBinding[entities.size()]);
 	}
 
-	public Reference[] getEdges() {
-		return references.toArray(new Reference[references.size()]);
+	public Dependency[] getEdges() {
+		return references.toArray(new Dependency[references.size()]);
 	}
 
 	/**
@@ -134,7 +135,7 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		default:
 			sourceBinding = null; // should not reach here
 		}
-		references.add(new Reference(sourceBinding, targetBinding));
+		references.add(new Dependency(sourceBinding, targetBinding));
 	}
 
 	private ASTNode getSourceNode(ASTNode node) {
@@ -166,8 +167,14 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			if (b != null) {
 				entities.add(b);
 			}
-			inheritances.add(new Inheritance(b, 
+			inheritances.add(new Dependency(b, 
 					typeDeclaration.getSuperclassType().resolveBinding()));
+			@SuppressWarnings("unchecked")
+			List<Type> interfaces = typeDeclaration.superInterfaceTypes();
+			for (Type i : interfaces) {
+				inheritances.add(new Dependency(b, 
+						i.resolveBinding()));
+			}
 		}
 		return true;
 	}

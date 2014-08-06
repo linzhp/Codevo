@@ -6,12 +6,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.dom.*;
 
 import edu.ucsc.codevo.Utils;
-import edu.ucsc.codevo.model.Reference;
+import edu.ucsc.codevo.model.Dependency;
 import edu.ucsc.codevo.model.Entity;
 
 public class GraphInput {
 	private IBinding[] vertices;
-	private Reference[] edges;
+	private Dependency[] edges;
 	private Entity[] methodEntities, classEntities;
 
 	public Entity[] getClassEntities() {
@@ -25,7 +25,7 @@ public class GraphInput {
 					entities.put(key, new Entity(classBinding));
 				}
 			}
-			for (Reference d : edges) {
+			for (Dependency d : edges) {
 				ITypeBinding targetClassBinding = getClass(d.target);
 				Entity targetEntity = null;
 				if (targetClassBinding != null) {
@@ -64,7 +64,7 @@ public class GraphInput {
 			for (IBinding v : vertices) {
 				entities.put(v.getKey(), new Entity(v));
 			}
-			for (Reference e : edges) {
+			for (Dependency e : edges) {
 				Entity targetEntity = entities.get(e.target.getKey());
 				if (targetEntity != null) {
 					Entity sourceEntity = entities.get(e.source.getKey());
@@ -80,7 +80,7 @@ public class GraphInput {
 		return methodEntities;
 	}
 
-	public GraphInput(IBinding[] vertices, Reference[] edges) {
+	public GraphInput(IBinding[] vertices, Dependency[] edges) {
 		this.vertices = vertices;
 		this.edges = edges;
 	}
