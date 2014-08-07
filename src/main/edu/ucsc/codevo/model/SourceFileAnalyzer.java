@@ -94,12 +94,16 @@ public class SourceFileAnalyzer extends ASTVisitor {
 		}
 	}
 
-	public IBinding[] getVertices() {
+	public IBinding[] getEntities() {
 		return entities.toArray(new IBinding[entities.size()]);
 	}
 
-	public Dependency[] getEdges() {
+	public Dependency[] getReferences() {
 		return references.toArray(new Dependency[references.size()]);
+	}
+	
+	public Dependency[] getInheritances() {
+		return inheritances.toArray(new Dependency[inheritances.size()]);
 	}
 
 	/**

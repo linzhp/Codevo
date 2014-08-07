@@ -20,6 +20,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 import edu.ucsc.codevo.Activator;
+import edu.ucsc.codevo.model.GraphRevision;
 import edu.ucsc.codevo.model.ProjectReconfigurer;
 import edu.ucsc.codevo.model.SourceFileAnalyzer;
 import edu.ucsc.codevo.model.TimeMachine;
@@ -46,6 +47,7 @@ public class AnalyzingJob extends Job {
 				iterator = structuredSelection.iterator();
 				IJavaProject javaProject = iterator.next().getJavaProject();
 				TimeMachine timeMachine = new TimeMachine(paths);
+				GraphRevision graphRevisions = new GraphRevision();
 				monitor.beginTask("Walking through revisions", timeMachine.getTotalRevsions());
 				RevCommit revision = timeMachine.next();
 				while (revision != null) {
@@ -67,8 +69,7 @@ public class AnalyzingJob extends Job {
 							analyzer.add((IPackageFragment)element);
 						}
 					}
-					System.out.println("Dependencies found: " + analyzer.getEdges().length);
-					System.out.println("Entities found: " + analyzer.getVertices().length);
+					graphRevisions.addRevision(revision, analyzer.getEntities(), analyzer.getReferences(), analyzer.getInheritances());
 					monitor.worked(1);
 					revision = timeMachine.next();
 				}

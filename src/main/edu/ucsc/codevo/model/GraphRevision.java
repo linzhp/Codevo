@@ -2,7 +2,6 @@ package edu.ucsc.codevo.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -16,14 +15,14 @@ import edu.ucsc.codevo.Utils;
 public class GraphRevision {
 	public void addRevision(
 			RevCommit revision,
-			List<IBinding> entities, 
-			List<Dependency> references, 
-			List<Dependency> inheritances) throws IOException {
+			IBinding[] entities, 
+			Dependency[] references, 
+			Dependency[] inheritances) throws IOException {
 		DB db = Utils.getDB();
 		DBCollection entitiesColl = db.getCollection("entities");
-		ArrayList<String> entityKeys = new ArrayList<>(entities.size());
-		for (IBinding e : entities) {
-			entityKeys.add(e.getKey());
+		String[] entityKeys = new String[entities.length];
+		for (int i = 0; i < entities.length; i++) {
+			entityKeys[i] = entities[i].getKey();
 		}
 		String revisionName = revision.getName();
 		entitiesColl.insert(new BasicDBObject("_id", revisionName).
@@ -37,7 +36,7 @@ public class GraphRevision {
 		inhColl.insert(buildDBObject(inheritances, revisionName));
 	}
 
-	private BasicDBObject buildDBObject(List<Dependency> dependencies,
+	private BasicDBObject buildDBObject(Dependency[] dependencies,
 			String revisionName) {
 		BasicDBObject dbObject = new BasicDBObject("_id", revisionName);
 		for (Dependency d : dependencies) {
