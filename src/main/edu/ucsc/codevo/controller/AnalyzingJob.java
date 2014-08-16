@@ -20,6 +20,8 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 import edu.ucsc.codevo.Activator;
+import edu.ucsc.codevo.Utils;
+import edu.ucsc.codevo.model.BindingFailureException;
 import edu.ucsc.codevo.model.GraphRevision;
 import edu.ucsc.codevo.model.ProjectReconfigurer;
 import edu.ucsc.codevo.model.SourceFileAnalyzer;
@@ -58,18 +60,22 @@ public class AnalyzingJob extends Job {
 					iterator = structuredSelection.iterator();
 					monitor.beginTask("Analyzing selection", structuredSelection.size());
 					SourceFileAnalyzer analyzer = new SourceFileAnalyzer(revision.getName());
-					while (iterator.hasNext()) {
-						IJavaElement element = iterator.next();
-						monitor.subTask(element.getElementName());
-						if (element instanceof IJavaProject) {
-							analyzer.add((IJavaProject)element);
-						} else if (element instanceof IPackageFragmentRoot) {
-							analyzer.add((IPackageFragmentRoot)element);
-						} else if (element instanceof IPackageFragment) {
-							analyzer.add((IPackageFragment)element);
+					try {
+						while (iterator.hasNext()) {
+							IJavaElement element = iterator.next();
+							monitor.subTask(element.getElementName());
+							if (element instanceof IJavaProject) {
+								analyzer.add((IJavaProject)element);
+							} else if (element instanceof IPackageFragmentRoot) {
+								analyzer.add((IPackageFragmentRoot)element);
+							} else if (element instanceof IPackageFragment) {
+								analyzer.add((IPackageFragment)element);
+							}
 						}
+						graphRevisions.addRevision(revision, analyzer.getEntities(), analyzer.getReferences(), analyzer.getInheritances());
+					} catch (BindingFailureException e) {
+						Utils.log(Status.WARNING, e.getMessage() + ", skipping revision " + revision.getName());
 					}
-					graphRevisions.addRevision(revision, analyzer.getEntities(), analyzer.getReferences(), analyzer.getInheritances());
 					monitor.worked(1);
 					revision = timeMachine.next();
 				}

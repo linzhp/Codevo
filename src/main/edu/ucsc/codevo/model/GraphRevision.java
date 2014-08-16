@@ -44,10 +44,14 @@ public class GraphRevision {
 			ArrayList<String> targets = (ArrayList<String>) dbObject.get(d.source.getKey());
 			if (targets == null) {
 				targets = new ArrayList<>();
-				dbObject.append(d.source.getKey(), targets);
+				dbObject.append(escape(d.source.getKey()), targets);
 			}
 			targets.add(d.target.getKey());
 		}
 		return dbObject;
+	}
+	
+	private static String escape(String key) {
+		return key.replaceAll("\\$", "U+FF04").replaceAll("\\.", "U+FF0E");
 	}
 }

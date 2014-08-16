@@ -111,16 +111,17 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	 * @param sourceNode
 	 * @param targetBinding can be a local type. However, this dependency
 	 * will be ignored eventually, as local types are not added into vertices
+	 * @throws BindingFailureException 
 	 */
 	void recordDependency(ASTNode sourceNode, IBinding targetBinding) {
 		if (targetBinding == null) {
-			log(Status.INFO, "Cannot resolve binding for " + sourceNode);
-			return;
+			throw new BindingFailureException(sourceNode);
 		}
 		sourceNode = getSourceNode(sourceNode);
 		if (sourceNode == null) {
 			return;
 		}
+		
 		IBinding sourceBinding;
 		switch (sourceNode.getNodeType()) {
 		case ASTNode.METHOD_DECLARATION:
@@ -138,6 +139,10 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			break;
 		default:
 			sourceBinding = null; // should not reach here
+			throw new RuntimeException("Unknown source node type:\n" + sourceNode);
+		}
+		if (sourceBinding == null) {
+			throw new BindingFailureException(sourceNode);
 		}
 		references.add(new Dependency(sourceBinding, targetBinding));
 	}
@@ -170,14 +175,29 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			ITypeBinding b = typeDeclaration.resolveBinding();
 			if (b != null) {
 				entities.add(b);
+			} else {
+				throw new BindingFailureException(typeDeclaration);
 			}
-			inheritances.add(new Dependency(b, 
-					typeDeclaration.getSuperclassType().resolveBinding()));
+			Type superclass = typeDeclaration.getSuperclassType();
+			if (superclass != null) {
+				ITypeBinding superclassBinding = superclass.resolveBinding();
+				if (superclassBinding == null) {
+					throw new BindingFailureException(superclass);
+				} else {
+					inheritances.add(new Dependency(b, 
+							superclassBinding));									
+				}
+			}
 			@SuppressWarnings("unchecked")
 			List<Type> interfaces = typeDeclaration.superInterfaceTypes();
 			for (Type i : interfaces) {
-				inheritances.add(new Dependency(b, 
-						i.resolveBinding()));
+				ITypeBinding interfaceBinding = i.resolveBinding();
+				if (interfaceBinding == null) {
+					throw new BindingFailureException(i);
+				} else {
+					inheritances.add(new Dependency(b, 
+							interfaceBinding));						
+				}
 			}
 		}
 		return true;
@@ -189,6 +209,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			IMethodBinding b = methodDeclaration.resolveBinding();
 			if (b != null) {
 				entities.add(b);
+			} else {
+				throw new BindingFailureException(methodDeclaration);
 			}
 		}
 		return true;
@@ -202,6 +224,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 						((VariableDeclarationFragment)o).resolveBinding();
 				if (b != null) {
 					entities.add(b);
+				} else {
+					throw new BindingFailureException(node);
 				}
 			}
 		}
@@ -254,6 +278,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			ITypeBinding b = node.resolveBinding();
 			if (b != null) {
 				entities.add(b);
+			} else {
+				log(Status.WARNING, "Cannot resolve binding for\n" + node);
 			}
 		}
 		return true;
@@ -265,6 +291,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			IMethodBinding b = node.resolveBinding();
 			if (b != null) {
 				entities.add(b);
+			} else {
+				log(Status.WARNING, "Cannot resolve binding for\n" + node);
 			}
 		}
 		return true;
@@ -274,7 +302,11 @@ public class SourceFileAnalyzer extends ASTVisitor {
 	public boolean visit(EnumConstantDeclaration node) {
 		if (isGlobal(node)) {
 			IVariableBinding b = node.resolveVariable();
-			entities.add(b);
+			if (b != null) {
+				entities.add(b);
+			} else {
+				log(Status.WARNING, "Cannot resolve binding for\n" + node);
+			}
 		}
 		return true;
 	}
@@ -286,6 +318,8 @@ public class SourceFileAnalyzer extends ASTVisitor {
 			ITypeBinding b = node.resolveBinding();
 			if (b != null) {
 				entities.add(b);
+			} else {
+				log(Status.WARNING, "Cannot resolve binding for\n" + node);
 			}
 		}
 		return true;
