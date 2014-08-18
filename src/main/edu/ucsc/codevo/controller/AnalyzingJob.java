@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.tools.ant.BuildException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -54,13 +55,13 @@ public class AnalyzingJob extends Job {
 				RevCommit revision = timeMachine.next();
 				while (revision != null) {
 					monitor.subTask("Reconfiguring project for revision " + revision.getName());
-					ProjectReconfigurer.reconfigure(javaProject, monitor);
-					monitor.subTask("Analyzing source code for revision " + revision.getName());
-		            // reset iterator
-					iterator = structuredSelection.iterator();
-					monitor.beginTask("Analyzing selection", structuredSelection.size());
-					SourceFileAnalyzer analyzer = new SourceFileAnalyzer(revision.getName());
 					try {
+						ProjectReconfigurer.reconfigure(javaProject, monitor);
+						monitor.subTask("Analyzing source code for revision " + revision.getName());
+			            // reset iterator
+						iterator = structuredSelection.iterator();
+						monitor.beginTask("Analyzing selection", structuredSelection.size());
+						SourceFileAnalyzer analyzer = new SourceFileAnalyzer(revision.getName());
 						while (iterator.hasNext()) {
 							IJavaElement element = iterator.next();
 							monitor.subTask(element.getElementName());
@@ -73,8 +74,8 @@ public class AnalyzingJob extends Job {
 							}
 						}
 						graphRevisions.addRevision(revision, analyzer.getEntities(), analyzer.getReferences(), analyzer.getInheritances());
-					} catch (BindingFailureException e) {
-						Utils.log(Status.WARNING, e.getMessage() + ", skipping revision " + revision.getName());
+					} catch (BindingFailureException|BuildException e) {
+						Utils.log(Status.WARNING, e.getMessage() + "\nskipping revision " + revision.getName());
 					}
 					monitor.worked(1);
 					revision = timeMachine.next();
